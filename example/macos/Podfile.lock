@@ -1,0 +1,23 @@
+PODS:
+  - FlutterMacOS (1.0.0)
+  - native_logger (0.0.1):
+    - Flutter
+    - FlutterMacOS
+
+DEPENDENCIES:
+  - FlutterMacOS (from `Flutter/ephemeral`)
+  - native_logger (from `Flutter/ephemeral/.symlinks/plugins/native_logger/darwin`)
+
+EXTERNAL SOURCES:
+  FlutterMacOS:
+    :path: Flutter/ephemeral
+  native_logger:
+    :path: Flutter/ephemeral/.symlinks/plugins/native_logger/darwin
+
+SPEC CHECKSUMS:
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  native_logger: 95462a19cf4dd8b6ff167f3bcf030eefbae4940f
+
+PODFILE CHECKSUM: c2e95c8c0fe03c5c57e438583cae4cc732296009
+
+COCOAPODS: 1.15.2

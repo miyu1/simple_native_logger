@@ -1,0 +1,38 @@
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:native_logger/native_logger_method_channel.dart';
+
+void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  MethodChannelNativeLogger platform = MethodChannelNativeLogger();
+  const MethodChannel channel = MethodChannel('native_logger');
+
+  setUp(() {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
+      channel,
+      (MethodCall methodCall) async {
+        return '42';
+      },
+    );
+  });
+
+  tearDown(() {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
+  });
+
+  /*
+  test('getPlatformVersion', () async {
+    expect(await platform.getPlatformVersion(), '42');
+  });
+  */
+  test('log', () async {
+    try {
+      // success if no error thrown
+      await platform.log(1, "tagA", "message");
+    } catch (ex) {
+      fail(ex.toString());
+    }
+  });
+
+}
