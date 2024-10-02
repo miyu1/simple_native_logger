@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 
@@ -23,7 +22,7 @@ import 'package:flutter_test/flutter_test.dart';
 //   - log command for macOS/iOS
 //
 void main() {
-  test("test1", () async{
+  test("android test", () async{
     const tag = "Stub";
 
     //final networks = await NetworkInterface.list(type: InternetAddressType.IPv4);
@@ -54,6 +53,18 @@ void main() {
     print("adb len: ${adb.stdout.length}");
     for (final line in adb.stdout) {
       print("adb: $line");
+    }
+    */
+
+    debugPrint("start server process");
+    final server = await ProcessRunner.start(
+      "dart",
+      ["run", "test/websocket_server.dart", ipaddress]
+    );
+    await Future.delayed(const Duration(seconds: 1));
+    /*
+    for(final line in server.stdout) {
+      print("server: $line");
     }
     */
 
@@ -190,9 +201,13 @@ void main() {
     }
 
     socket.add("exit");
+    await socket.close();
 
     debugPrint("waiting for stub close");
     await stub.process.exitCode;
+
+    debugPrint("waiting for server to close");
+    await server.process.exitCode;
 
     debugPrint("waiting for adb close");
     adbc.process.kill();
