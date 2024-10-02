@@ -21,7 +21,9 @@ import 'dart:io';
 void main(List<String> args) async {
   print('start: $args');
 
-  var server = await HttpServer.bind('192.168.1.10', 4040);
+  final ipaddress = args[0];
+  print("address: $ipaddress");
+  var server = await HttpServer.bind(ipaddress, 4040);
 
   WebSocket? listener;
   WebSocket? sender;
