@@ -20,7 +20,7 @@ samples, guidance on mobile development, and a full API reference.
 | NativeLogger.i | Log.i | Logger.info |
 | NativeLogger.w | Log.w | Logger.notice |
 | NativeLogger.e | Log.e | Logger.error |
-| NativeLogger.f | Log.wtf | Logger.fatal |
+| NativeLogger.f | Log.wtf | Logger.fault |
 
 iOS 14.0+ macOS 11.0+
  Debug (trace)
@@ -39,4 +39,4 @@ iOS 14.0+ macOS 11.0+
 
   ./adb -s 'HA1QR3B0' shell 'logcat -v time --pid=$(pidof -s io.github.miyu1.native_logger_example)'
    ./adb -s 'HA1QR3B0' shell 'setprop log.tag.MyApp V' 
-  log stream --predicate 'subsystem = "io.github.miyu1.nativeLoggerExample"'
+  log stream  --level debug --predicate 'subsystem = "io.github.miyu1.nativeLoggerExample"'
