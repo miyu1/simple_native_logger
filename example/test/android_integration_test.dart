@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter_test/flutter_test.dart';
+
+import 'common.dart';
 
 // This test code works by flutter test command,
 // but not with flutter run command or vscode ,
@@ -19,10 +19,9 @@ import 'package:flutter_test/flutter_test.dart';
 //   - websocket server for communicate with test stub
 //     (test/websocket_server.dart) 
 //   - adb command for Android
-//   - log command for macOS/iOS
 //
 void main() {
-  test("android test", () async{
+  test("android integration test", () async {
     const tag = "Stub";
 
     //final networks = await NetworkInterface.list(type: InternetAddressType.IPv4);
@@ -77,10 +76,10 @@ void main() {
       //["-d", "macos", "run", "-t", "integration_test/test_stub.dart"],
     );
 
-    var socket = await WebSocket.connect("ws://$ipaddress:4040/ws");
+    var socket = await connect("ws://$ipaddress:4040/ws");
 
     // have to wait flutter to build and run test_stub
-    var timeoutSocket = socket.timeout(const Duration(seconds: 20));
+    var timeoutSocket = socket.timeout(const Duration(seconds: 60));
     
     // handshake
     socket.add("waiting");
@@ -206,7 +205,7 @@ void main() {
     debugPrint("waiting for stub close");
     await stub.process.exitCode;
 
-    debugPrint("waiting for server to close");
+    debugPrint("waiting for server close");
     await server.process.exitCode;
 
     debugPrint("waiting for adb close");
@@ -228,7 +227,7 @@ void main() {
       print("adb2: $line");
     }
     */
-  }, timeout: const Timeout.factor(2));
+  }, timeout: const Timeout.factor(3));
 }
 
 Future<String> findAndroidDevice() async {
@@ -246,32 +245,4 @@ Future<String> findAndroidDevice() async {
     final elems = device.split(" • ");
     //print("elements: $elems");
     return elems[1].trim();
-}
-
-class ProcessRunner {
-  final String executable;
-  final List<String> arguments;
-  Process process;
-  List<String> stdout = [];
-
-  // do not use
-  ProcessRunner(this.executable, this.arguments, this.process){
-    final stdoutStream = process.stdout
-      //.timeout(const Duration(seconds: 10))
-      .transform(systemEncoding.decoder)
-      .transform(const LineSplitter());
-    stdoutStream.listen((value){
-      stdout.add(value);
-    });
-  }
-
-  static Future<ProcessRunner> start(String executable, List<String> arguments) async {
-    final process = await Process.start(executable, arguments);
-    final ret = ProcessRunner(executable, arguments, process);
-    return ret;
-  }
-
-  void clearStdout() {
-    stdout = [];
-  }
 }
