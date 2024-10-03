@@ -17,7 +17,8 @@ void main() {
   };
 
   PlatformDispatcher.instance.onError = (error, stack) {
-    if (error is PlatformException) {
+    if (error is PlatformException ||
+        error is MissingPluginException) {
       // error on method channel. cannot use native logger
       debugPrint("$error\n$stack");
     } else {
@@ -77,8 +78,9 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text('Running on: $_platformVersion\n'),
+              //Text('Running on: $_platformVersion\n'),
               ElevatedButton(
                 onPressed: () {
                   _nativeLogger.v("verbose log");
@@ -115,6 +117,12 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: const Text('fatal log')
               ),
+                            ElevatedButton(
+                onPressed: () {
+                  _nativeLogger.log(LogLevel.silent, "silent log", null);
+                },
+                child: const Text('silent')
+              ),
               ElevatedButton(
                 onPressed: () {
                   try {
@@ -124,7 +132,7 @@ class _MyAppState extends State<MyApp> {
                     _nativeLogger.e(ex, stack: stack);
                   }
                 },
-                child: const Text('catch exception')
+                child: const Text('exception')
               ),
               ElevatedButton(
                 onPressed: () {
