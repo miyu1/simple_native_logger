@@ -7,6 +7,9 @@ import Flutter
 import os
 
 public class NativeLoggerPlugin: NSObject, FlutterPlugin {
+  var tag = "flutter"
+  var logger = os.Logger(subsystem: Bundle.main.bundleIdentifier!, category: "flutter")
+  
   public static func register(with registrar: FlutterPluginRegistrar) {
 #if os(macOS)
     let channel = FlutterMethodChannel(name: "native_logger", binaryMessenger: registrar.messenger)
@@ -26,6 +29,47 @@ public class NativeLoggerPlugin: NSObject, FlutterPlugin {
       let version = "iOS " + UIDevice.current.systemVersion
 #endif
       result(version)
+    case "log" :
+      if let args = call.arguments as? Dictionary<String, Any> {
+        if let level = args["level"] as? Int,
+          let tag = args["tag"] as? String,
+          let message = args["message"] as? String
+        {
+          if (tag != self.tag) {
+            logger = os.Logger(subsystem: Bundle.main.bundleIdentifier!, category: tag)
+            self.tag = tag
+          }
+          switch(level) {
+          case 0:
+            logger.debug("\(message, privacy: .public)")
+            result(0)
+          case 1:
+            logger.debug("\(message, privacy: .public)")
+            result(0)
+          case 2:
+            logger.info("\(message, privacy: .public)")
+            result(0)
+          case 3:
+            logger.notice("\(message, privacy: .public)")
+            result(0)
+          case 4:
+            logger.error("\(message, privacy: .public)")
+            result(0)
+          case 5:
+            logger.fault("\(message, privacy: .public)")
+            result(0)
+          default:
+            result(
+              FlutterError(
+                code: "PARAMETER",
+                message:"parameter level:\(level), tag:\(tag), msg:\(message)",
+                details: nil
+              )
+            )
+          } // end switch
+        }
+      }
+    /*
     case "logTest":
       if let args = call.arguments as? Dictionary<String, Any> {
         if let message = args["message"] as? String {
@@ -36,6 +80,7 @@ public class NativeLoggerPlugin: NSObject, FlutterPlugin {
       }
 
       result(0)
+    */
     default:
       result(FlutterMethodNotImplemented)
     }
