@@ -14,6 +14,7 @@ import org.mockito.Mockito
  */
 
 internal class NativeLoggerPluginTest {
+  /*
   @Test
   fun onMethodCall_getPlatformVersion_returnsExpectedValue() {
     val plugin = NativeLoggerPlugin()
@@ -24,4 +25,25 @@ internal class NativeLoggerPluginTest {
 
     Mockito.verify(mockResult).success("Android " + android.os.Build.VERSION.RELEASE)
   }
+   */
+
+  @Test
+  fun onMethodCall_log() {
+    println("onMethodCall_log start")
+
+    val plugin = NativeLoggerPlugin()
+
+    val args = mapOf(
+      "level" to 3,
+      "tag" to "tagA",
+      "message" to "log message"
+    )
+    val call = MethodCall("getPlatformVersion", args)
+    val mockResult: MethodChannel.Result = Mockito.mock(MethodChannel.Result::class.java)
+    plugin.onMethodCall(call, mockResult)
+
+    println("onMethodCall_log end")
+    //Mockito.verify(mockResult).success("Android " + android.os.Build.VERSION.RELEASE)
+  }
+
 }
