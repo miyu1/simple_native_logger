@@ -138,6 +138,12 @@ class NativeLogger {
     
     final logInfo = LogInfo(level, tag, str1);
     _streamController.add(logInfo);
+
+    //final tt = isEchoNeeded(logInfo.level);
+    //print("isEchoNeeded: $tt");
+    if (isEchoNeeded(logInfo.level)) {
+      echo(logInfo);
+    }
   }
 
   // internal method to determine whether echo back needed
@@ -149,6 +155,34 @@ class NativeLogger {
       return false;
     }
     return true;
+  }
+
+  void echo(LogInfo info) {
+    var kind = "";
+
+    switch(info.level) {
+    case LogLevel.verbose:
+      kind = "V";
+      break;
+    case LogLevel.debug:
+      kind = "D";
+      break;
+    case LogLevel.info:
+      kind = "I";
+      break;
+    case LogLevel.warning:
+      kind = "W";
+      break;
+    case LogLevel.error:
+      kind = "E";
+      break;
+    case LogLevel.fatal:
+      kind = "F";
+      break;
+    default:
+      break;
+    }
+    debugPrint("[${info.tag}:$kind] ${info.message}");
   }
 
   static final _streamController = StreamController<LogInfo>();
