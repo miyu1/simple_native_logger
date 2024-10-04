@@ -34,7 +34,7 @@ void main() {
 
     final deviceName = await findMacDevice();
     debugPrint("macos device: $deviceName");
-    expect(deviceName, isNotEmpty, reason: "connect any android device.");
+    expect(deviceName, isNotEmpty, reason: "run in macos.");
 
     debugPrint("start log process");
     final logc = await ProcessRunner.start(
@@ -213,9 +213,13 @@ void main() {
     debugPrint("waiting for log close");
     logc.process.kill();
     await logc.process.exitCode;
-  }, timeout: const Timeout.factor(3));  
+    
+  },
+  // need retry because in some cases stub fails to start
+  // when it takes long time to build and start stub and timeout exception occurs
+  testOn: "mac-os", timeout: const Timeout.factor(3), retry: 3);  
 
-  test("macos release build", () async {
+  test("macos release build (no stdout echo)", () async {
     const tag = "Stub";
 
     final networks = await NetworkInterface.list();
@@ -228,7 +232,7 @@ void main() {
 
     final deviceName = await findMacDevice();
     debugPrint("macos device: $deviceName");
-    expect(deviceName, isNotEmpty, reason: "connect any android device.");
+    expect(deviceName, isNotEmpty, reason: "run on mac.");
 
     debugPrint("start log process");
     final logc = await ProcessRunner.start(
@@ -408,7 +412,10 @@ void main() {
     debugPrint("waiting for log close");
     logc.process.kill();
     await logc.process.exitCode;
-  }, timeout: const Timeout.factor(3));    
+  },
+  // need retry because in some cases stub fails to start
+  // when it takes long time to build and start stub and timeout exception occurs
+  testOn: "mac-os", timeout: const Timeout.factor(3), retry: 3);
 }
 
 Future<String> findMacDevice() async {

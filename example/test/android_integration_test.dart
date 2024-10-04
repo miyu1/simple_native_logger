@@ -190,9 +190,9 @@ void main() {
         }
         debugPrint("$command test");
       }
-    } catch (ex) {
+    } catch (ex, stack) {
       // timeout?
-      debugPrint("no response: $ex");
+      debugPrint("no response: $ex\n$stack");
       for(final line in stub.stdout) {
         debugPrint("stub: $line");
       }
@@ -227,7 +227,10 @@ void main() {
       print("adb2: $line");
     }
     */
-  }, timeout: const Timeout.factor(3));
+  },
+  // need retry because in some cases stub fails to start
+  // when it takes long time to build and start stub and timeout exception occurs
+  timeout: const Timeout.factor(3), retry: 3);
 }
 
 Future<String> findAndroidDevice() async {
