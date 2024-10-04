@@ -40,3 +40,4 @@ iOS 14.0+ macOS 11.0+
   ./adb -s 'HA1QR3B0' shell 'logcat -v time --pid=$(pidof -s io.github.miyu1.native_logger_example)'
    ./adb -s 'HA1QR3B0' shell 'setprop log.tag.MyApp V' 
   log stream  --level debug --predicate 'subsystem = "io.github.miyu1.nativeLoggerExample"'
+  xcrun simctl spawn 450F57A5-5BC3-460F-90F7-D7E9057FB829 log stream --level debug --predicate 'subsystem = "io.github.miyu1.nativeLoggerExample"'
