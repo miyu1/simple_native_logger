@@ -11,10 +11,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:native_logger_example/main.dart';
 
 void main() {
-  testWidgets('Verify Platform version', (WidgetTester tester) async {
+  testWidgets('Verify MyApp screen', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
+    expect(find.text('verbose log'), findsOneWidget);
+    expect(find.text('debug log'), findsOneWidget);
+    expect(find.text('info log'), findsOneWidget);
+    expect(find.text('warning log'), findsOneWidget);
+    expect(find.text('error log'), findsOneWidget);
+    expect(find.text('fatal log'), findsOneWidget);
+    expect(find.text('silent'), findsOneWidget);
+    expect(find.text('exception'), findsOneWidget);
+    /*
     // Verify that platform version is retrieved.
     expect(
       find.byWidgetPredicate(
@@ -23,5 +32,6 @@ void main() {
       ),
       findsOneWidget,
     );
+    */
   });
 }
