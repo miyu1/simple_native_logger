@@ -18,11 +18,7 @@ enum LogLevel {
   silent
 }
 
-class NativeLogger {
-  Future<String?> getPlatformVersion() {
-    return NativeLoggerPlatform.instance.getPlatformVersion();
-  }
- 
+class NativeLogger { 
   // static initialize method.
   // This method must be called once before using NativeLogger class
   static void init() {
@@ -196,12 +192,6 @@ class NativeLogger {
       await NativeLoggerPlatform.instance.log(value.level.index, value.tag, value.message);
     }
   }
-
-  /*
-  Future<void> logTest(String message) {
-    return NativeLoggerPlatform.instance.logTest(message);
-  }
-  */
 }
 
 class LogInfo {
