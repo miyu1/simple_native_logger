@@ -10,22 +10,6 @@ class MethodChannelNativeLogger extends NativeLoggerPlatform {
   final methodChannel = const MethodChannel('native_logger');
 
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
-  }
-
-  /*
-  @override
-  Future<void> logTest(String message) async {
-    final arguments = {
-      'message': message,
-    };
-    await methodChannel.invokeMethod('logTest', arguments);
-  }
-  */
-
-  @override
   Future<void> log(int level, String tag, String message) async {
     final arguments = {
       'level' : level,

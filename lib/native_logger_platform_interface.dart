@@ -23,16 +23,6 @@ abstract class NativeLoggerPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
-  }
-
-  /*
-  Future<void> logTest(String message) {
-    throw UnimplementedError('logTest() has not been implemented.');
-  }
-  */
-
   Future<void> log(int level, String tag, String message) {
     throw UnimplementedError('log() has not been implemented.');
   }
