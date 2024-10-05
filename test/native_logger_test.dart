@@ -10,9 +10,6 @@ class MockNativeLoggerPlatform
     with MockPlatformInterfaceMixin
     implements NativeLoggerPlatform {
 
-  @override
-  Future<String?> getPlatformVersion() => Future.value('42');
-
   int level = 0;
   String tag = "";
   String message = "";
@@ -148,7 +145,7 @@ void main() {
       testUtilLogByLevel(nativeLoggerPlugin, level, message);
       await Future.delayed(const Duration(seconds: 1));
 
-      debugPrint('message: ${fakePlatform.message}');
+      //debugPrint('message: ${fakePlatform.message}');
       expect(fakePlatform.level, level.index);
       expect(fakePlatform.tag, tag);
       expect(fakePlatform.message, startsWith(message));
@@ -166,7 +163,7 @@ void main() {
     NativeLoggerPlatform.instance = fakePlatform;
 
     final stack = StackTrace.current;
-    debugPrint("stack: $stack");
+    //debugPrint("stack: $stack");
     final actualStackCount = stack.toString().split("\n").length;
 
     for(final level in LogLevel.values) {
@@ -178,7 +175,7 @@ void main() {
       testUtilLogByLevel(nativeLoggerPlugin, level, ex, stack: stack);
       await Future.delayed(const Duration(seconds: 1));
 
-      debugPrint('message: ${fakePlatform.message}');
+      //debugPrint('message: ${fakePlatform.message}');
       expect(fakePlatform.level, level.index);
       expect(fakePlatform.tag, tag);
       expect(fakePlatform.message, startsWith(message));
@@ -200,7 +197,7 @@ void main() {
     NativeLoggerPlatform.instance = fakePlatform;
 
     final stack = StackTrace.current;
-    debugPrint("stack: $stack");
+    //debugPrint("stack: $stack");
     //final actualStackCount = stack.toString().split("\n").length;
 
     for(final level in LogLevel.values) {
@@ -212,7 +209,7 @@ void main() {
       testUtilLogByLevel(nativeLoggerPlugin, level, ex, stack: stack);
       await Future.delayed(const Duration(seconds: 1));
 
-      debugPrint('message: ${fakePlatform.message}');
+      // debugPrint('message: ${fakePlatform.message}');
       expect(fakePlatform.level, level.index);
       expect(fakePlatform.tag, tag);
       expect(fakePlatform.message, startsWith(message));
