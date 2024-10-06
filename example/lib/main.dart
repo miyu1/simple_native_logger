@@ -118,12 +118,14 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: const Text('fatal log')
               ),
-                            ElevatedButton(
+              /*
+              ElevatedButton(
                 onPressed: () {
                   _nativeLogger.log(LogLevel.silent, "silent log", null);
                 },
                 child: const Text('silent')
               ),
+              */
               ElevatedButton(
                 onPressed: () {
                   try {
