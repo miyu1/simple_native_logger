@@ -23,7 +23,7 @@ $ adb shell 'logcat -v time --pid=$(pidof -s io.github.miyu1.native_logger_examp
 ```
 
 On macOS/iOS, you can see the logs using macOS Console app,
-![Console App](images/console_app.png "Console App")  
+![Console App](doc/images/console_app.png "Console App")  
 
 or by log command.
 (For iOS simulator, run 'xcrun simctl spawn booted log' command with same parameter.)
@@ -134,7 +134,7 @@ emu64xa:/ $ exit
 By default, verbose, debug and info log is not shown by console app or log command.  
 To change this behavior on console app, use Action menu of it.
 
-![Console App Menu](images/console_app_menu.png "Console App Menu") 
+![Console App Menu](doc/images/console_app_menu.png "Console App Menu") 
 
 For log command, and '--level debug' option.
 
