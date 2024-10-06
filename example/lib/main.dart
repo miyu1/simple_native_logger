@@ -3,12 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
-import 'package:native_logger/native_logger.dart';
+import 'package:simple_native_logger/simple_native_logger.dart';
 
 void main() {
-  NativeLogger.init();
+  SimpleNativeLogger.init();
 
-  final logger = NativeLogger(tag: "MainError");
+  final logger = SimpleNativeLogger(tag: "MainError");
 
   FlutterError.onError = (FlutterErrorDetails details) {
     logger.e(details.toStringShort(), stack: details.stack);
@@ -38,7 +38,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   //String _platformVersion = 'Unknown';
-  final _nativeLogger = NativeLogger(tag: "MyApp" );
+  final _nativeLogger = SimpleNativeLogger(tag: "MyApp" );
 
   @override
   void initState() {

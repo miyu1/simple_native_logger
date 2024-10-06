@@ -4,10 +4,10 @@ import 'package:flutter/services.dart';
 import 'simple_native_logger_platform_interface.dart';
 
 /// An implementation of [NativeLoggerPlatform] that uses method channels.
-class MethodChannelNativeLogger extends NativeLoggerPlatform {
+class MethodChannelSimpleNativeLogger extends SimpleNativeLoggerPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('native_logger');
+  final methodChannel = const MethodChannel('simple_native_logger');
 
   @override
   Future<void> log(int level, String tag, String message) async {

@@ -2,23 +2,23 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'simple_native_logger_method_channel.dart';
 
-abstract class NativeLoggerPlatform extends PlatformInterface {
+abstract class SimpleNativeLoggerPlatform extends PlatformInterface {
   /// Constructs a NativeLoggerPlatform.
-  NativeLoggerPlatform() : super(token: _token);
+  SimpleNativeLoggerPlatform() : super(token: _token);
 
   static final Object _token = Object();
 
-  static NativeLoggerPlatform _instance = MethodChannelNativeLogger();
+  static SimpleNativeLoggerPlatform _instance = MethodChannelSimpleNativeLogger();
 
   /// The default instance of [NativeLoggerPlatform] to use.
   ///
   /// Defaults to [MethodChannelNativeLogger].
-  static NativeLoggerPlatform get instance => _instance;
+  static SimpleNativeLoggerPlatform get instance => _instance;
 
   /// Platform-specific implementations should set this with their own
   /// platform-specific class that extends [NativeLoggerPlatform] when
   /// they register themselves.
-  static set instance(NativeLoggerPlatform instance) {
+  static set instance(SimpleNativeLoggerPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }

@@ -189,7 +189,7 @@ class SimpleNativeLogger {
     _isInitialized = true;
     final stream = _streamController.stream;
     await for(final value in stream) {
-      await NativeLoggerPlatform.instance.log(value.level.index, value.tag, value.message);
+      await SimpleNativeLoggerPlatform.instance.log(value.level.index, value.tag, value.message);
     }
   }
 }

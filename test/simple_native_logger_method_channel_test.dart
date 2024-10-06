@@ -1,12 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:native_logger/native_logger_method_channel.dart';
+import 'package:simple_native_logger/simple_native_logger_method_channel.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelNativeLogger platform = MethodChannelNativeLogger();
-  const MethodChannel channel = MethodChannel('native_logger');
+  final platform = MethodChannelSimpleNativeLogger();
+  const MethodChannel channel = MethodChannel('simple_native_logger');
 
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(

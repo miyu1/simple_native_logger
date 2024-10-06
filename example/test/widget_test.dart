@@ -7,7 +7,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:native_logger_example/main.dart';
+import 'package:simple_native_logger_example/main.dart';
 
 void main() {
   testWidgets('Verify MyApp screen', (WidgetTester tester) async {

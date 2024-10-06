@@ -5,8 +5,8 @@
 import FlutterMacOS
 import Foundation
 
-import native_logger
+import simple_native_logger
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  NativeLoggerPlugin.register(with: registry.registrar(forPlugin: "NativeLoggerPlugin"))
+  SimpleNativeLoggerPlugin.register(with: registry.registrar(forPlugin: "SimpleNativeLoggerPlugin"))
 }

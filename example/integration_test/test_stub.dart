@@ -5,13 +5,13 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:native_logger/native_logger.dart';
+import 'package:simple_native_logger/simple_native_logger.dart';
 
 
 // flutter run -t integration_test/test_stub.dart --dart-define=ARGS=<ip address>
 void main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  NativeLogger.init();
+  SimpleNativeLogger.init();
 
   const ipaddress = String.fromEnvironment("ARGS");
   //print("start ($ipaddress) ${DateTime.now()}");
@@ -24,7 +24,7 @@ void main() async {
   socket.add("ready");
   var timeoutSocket = socket.timeout(const Duration(seconds: 3));
 
-  final nativeLogger = NativeLogger(tag:"Stub");
+  final nativeLogger = SimpleNativeLogger(tag:"Stub");
 
   try {
     await for(final value in timeoutSocket) {

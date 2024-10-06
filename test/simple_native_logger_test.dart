@@ -6,9 +6,9 @@ import 'package:simple_native_logger/simple_native_logger_platform_interface.dar
 import 'package:simple_native_logger/simple_native_logger_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockNativeLoggerPlatform
+class MockSimpleNativeLoggerPlatform
     with MockPlatformInterfaceMixin
-    implements NativeLoggerPlatform {
+    implements SimpleNativeLoggerPlatform {
 
   int level = 0;
   String tag = "";
@@ -29,7 +29,7 @@ class MockNativeLoggerPlatform
 }
 
 // utility fuction to log by each level
-void testUtilLogByLevel(NativeLogger logger, LogLevel level, Object message, {StackTrace? stack}) {
+void testUtilLogByLevel(SimpleNativeLogger logger, LogLevel level, Object message, {StackTrace? stack}) {
   switch(level) {
   case LogLevel.verbose :
     logger.v(message, stack: stack);
@@ -55,11 +55,12 @@ void testUtilLogByLevel(NativeLogger logger, LogLevel level, Object message, {St
 }
 
 void main() {
-  final NativeLoggerPlatform initialPlatform = NativeLoggerPlatform.instance;
-  NativeLogger.init();
+  final SimpleNativeLoggerPlatform initialPlatform = 
+    SimpleNativeLoggerPlatform.instance;
+  SimpleNativeLogger.init();
 
   test('MethodChannelNativeLogger is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelNativeLogger>());
+    expect(initialPlatform, isInstanceOf<MethodChannelSimpleNativeLogger>());
   });
 
   /*
@@ -75,9 +76,11 @@ void main() {
     const tag = "TAG";
     const message = "LogMessage";
 
-    NativeLogger nativeLoggerPlugin = NativeLogger(tag: tag, addLineNumber: false);
-    MockNativeLoggerPlatform fakePlatform = MockNativeLoggerPlatform();
-    NativeLoggerPlatform.instance = fakePlatform;
+    SimpleNativeLogger nativeLoggerPlugin =
+      SimpleNativeLogger(tag: tag, addLineNumber: false);
+    MockSimpleNativeLoggerPlatform fakePlatform = 
+      MockSimpleNativeLoggerPlatform();
+    SimpleNativeLoggerPlatform.instance = fakePlatform;
 
     for(final level in LogLevel.values) {
       if (level == LogLevel.silent) {
@@ -97,13 +100,13 @@ void main() {
     const tag = "TAG2";
     const message = "LogMessage";
 
-    NativeLogger nativeLoggerPlugin = NativeLogger(
+    SimpleNativeLogger nativeLoggerPlugin = SimpleNativeLogger(
       tag: tag,
       logLevel: LogLevel.warning,
       addLineNumber: false
     );
-    MockNativeLoggerPlatform fakePlatform = MockNativeLoggerPlatform();
-    NativeLoggerPlatform.instance = fakePlatform;
+    final fakePlatform = MockSimpleNativeLoggerPlatform();
+    SimpleNativeLoggerPlatform.instance = fakePlatform;
 
     for(final level in [LogLevel.warning, LogLevel.error, LogLevel.fatal]) {
       debugPrint("testing for level: $level");
@@ -132,9 +135,10 @@ void main() {
     const tag = "TAG";
     const message = "LogMessage";
 
-    NativeLogger nativeLoggerPlugin = NativeLogger(tag: tag, addLineNumber: true);
-    MockNativeLoggerPlatform fakePlatform = MockNativeLoggerPlatform();
-    NativeLoggerPlatform.instance = fakePlatform;
+    SimpleNativeLogger nativeLoggerPlugin = 
+      SimpleNativeLogger(tag: tag, addLineNumber: true);
+    final fakePlatform = MockSimpleNativeLoggerPlatform();
+    SimpleNativeLoggerPlatform.instance = fakePlatform;
 
     for(final level in LogLevel.values) {
       if (level == LogLevel.silent) {
@@ -158,9 +162,10 @@ void main() {
     final ex = Exception("log message");
     final message = ex.toString();
 
-    NativeLogger nativeLoggerPlugin = NativeLogger(tag: tag, stackCount: -1);
-    MockNativeLoggerPlatform fakePlatform = MockNativeLoggerPlatform();
-    NativeLoggerPlatform.instance = fakePlatform;
+    SimpleNativeLogger nativeLoggerPlugin = 
+      SimpleNativeLogger(tag: tag, stackCount: -1);
+    final fakePlatform = MockSimpleNativeLoggerPlatform();
+    SimpleNativeLoggerPlatform.instance = fakePlatform;
 
     final stack = StackTrace.current;
     //debugPrint("stack: $stack");
@@ -192,9 +197,10 @@ void main() {
     final message = ex.toString();
     const stackCount = 2;
 
-    NativeLogger nativeLoggerPlugin = NativeLogger(tag: tag, stackCount: stackCount);
-    MockNativeLoggerPlatform fakePlatform = MockNativeLoggerPlatform();
-    NativeLoggerPlatform.instance = fakePlatform;
+    final nativeLoggerPlugin = 
+      SimpleNativeLogger(tag: tag, stackCount: stackCount);
+    final fakePlatform = MockSimpleNativeLoggerPlatform();
+    SimpleNativeLoggerPlatform.instance = fakePlatform;
 
     final stack = StackTrace.current;
     //debugPrint("stack: $stack");
