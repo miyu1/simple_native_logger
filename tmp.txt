@@ -1,143 +1,0 @@
-00:00 +0: loading /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart                                                                                                            00:01 +0: loading /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart                                                                                                            00:01 +0: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: MethodChannelNativeLogger is the default instance                                                                 00:01 +1: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: MethodChannelNativeLogger is the default instance                                                                 00:01 +1: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log basic test                                                                                                    00:01 +1: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log basic test                                                                                                    
-testing for level: LogLevel.verbose
-00:02 +2: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log basic test                                                                                                    00:02 +2: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log basic test                                                                                                    
-testing for level: LogLevel.debug
-testing for level: LogLevel.info
-testing for level: LogLevel.warning
-testing for level: LogLevel.error
-testing for level: LogLevel.fatal
-00:07 +3: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log basic test                                                                                                    00:07 +3: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: suppress log by loglevel                                                                                          00:07 +3: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: suppress log by loglevel                                                                                          
-testing for level: LogLevel.warning
-testing for level: LogLevel.error
-testing for level: LogLevel.fatal
-testing for level: LogLevel.verbose
-testing for level: LogLevel.debug
-testing for level: LogLevel.info
-00:14 +4: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: suppress log by loglevel                                                                                          00:14 +4: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log with line number                                                                                              00:14 +4: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log with line number                                                                                              
-testing for level: LogLevel.verbose
-message: LogMessage (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:38:12)
-testing for level: LogLevel.debug
-message: LogMessage (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:41:12)
-testing for level: LogLevel.info
-message: LogMessage (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:44:12)
-testing for level: LogLevel.warning
-message: LogMessage (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:47:12)
-testing for level: LogLevel.error
-message: LogMessage (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:50:12)
-testing for level: LogLevel.fatal
-message: LogMessage (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:53:12)
-00:20 +5: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log with line number                                                                                              00:20 +5: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log with full stack                                                                                               00:20 +5: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log with full stack                                                                                               
-stack: #0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:168:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-<asynchronous suspension>
-#2      Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:213:7)
-<asynchronous suspension>
-#3      Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:258:9)
-<asynchronous suspension>
-
-testing for level: LogLevel.verbose
-message: Exception: log message
-stack trace:
-#0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:168:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-<asynchronous suspension>
-#2      Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:213:7)
-<asynchronous suspension>
-#3      Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:258:9)
-<asynchronous suspension>
-
-testing for level: LogLevel.debug
-message: Exception: log message
-stack trace:
-#0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:168:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-<asynchronous suspension>
-#2      Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:213:7)
-<asynchronous suspension>
-#3      Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:258:9)
-<asynchronous suspension>
-
-testing for level: LogLevel.info
-message: Exception: log message
-stack trace:
-#0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:168:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-<asynchronous suspension>
-#2      Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:213:7)
-<asynchronous suspension>
-#3      Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:258:9)
-<asynchronous suspension>
-
-testing for level: LogLevel.warning
-message: Exception: log message
-stack trace:
-#0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:168:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-<asynchronous suspension>
-#2      Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:213:7)
-<asynchronous suspension>
-#3      Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:258:9)
-<asynchronous suspension>
-
-testing for level: LogLevel.error
-message: Exception: log message
-stack trace:
-#0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:168:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-<asynchronous suspension>
-#2      Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:213:7)
-<asynchronous suspension>
-#3      Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:258:9)
-<asynchronous suspension>
-
-testing for level: LogLevel.fatal
-message: Exception: log message
-stack trace:
-#0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:168:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-<asynchronous suspension>
-#2      Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:213:7)
-<asynchronous suspension>
-#3      Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:258:9)
-<asynchronous suspension>
-
-00:26 +6: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log with full stack                                                                                               00:26 +6: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log with limited stack                                                                                            00:26 +6: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log with limited stack                                                                                            
-stack: #0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:202:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-<asynchronous suspension>
-#2      Declarer.test.<anonymous closure> (package:test_api/src/backend/declarer.dart:213:7)
-<asynchronous suspension>
-#3      Invoker._waitForOutstandingCallbacks.<anonymous closure> (package:test_api/src/backend/invoker.dart:258:9)
-<asynchronous suspension>
-
-testing for level: LogLevel.verbose
-message: Exception: log message
-stack trace:
-#0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:202:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-testing for level: LogLevel.debug
-message: Exception: log message
-stack trace:
-#0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:202:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-testing for level: LogLevel.info
-message: Exception: log message
-stack trace:
-#0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:202:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-testing for level: LogLevel.warning
-message: Exception: log message
-stack trace:
-#0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:202:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-testing for level: LogLevel.error
-message: Exception: log message
-stack trace:
-#0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:202:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-testing for level: LogLevel.fatal
-message: Exception: log message
-stack trace:
-#0      main.<anonymous closure> (file:///Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart:202:30)
-#1      Declarer.test.<anonymous closure>.<anonymous closure> (package:test_api/src/backend/declarer.dart:215:19)
-00:32 +7: /Users/miyako/Projects/flutter/native_logger/test/native_logger_test.dart: log with limited stack                                                                                            00:32 +7: All tests passed!                                                                                                                                                                            
