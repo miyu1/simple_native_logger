@@ -1,6 +1,6 @@
-package io.github.miyu1.native_logger
+package io.github.miyu1.simple_native_logger
 
-import android.util.Log
+import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
@@ -8,8 +8,8 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
-/** NativeLoggerPlugin */
-class NativeLoggerPlugin: FlutterPlugin, MethodCallHandler {
+/** SimpleNativeLoggerPlugin */
+class SimpleNativeLoggerPlugin: FlutterPlugin, MethodCallHandler {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -17,7 +17,7 @@ class NativeLoggerPlugin: FlutterPlugin, MethodCallHandler {
   private lateinit var channel : MethodChannel
 
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "native_logger")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "simple_native_logger")
     channel.setMethodCallHandler(this)
   }
 
@@ -69,14 +69,6 @@ class NativeLoggerPlugin: FlutterPlugin, MethodCallHandler {
       }
     } else if (call.method == "getPlatformVersion") {
       result.success("Android ${android.os.Build.VERSION.RELEASE}")
-    } else if (call.method == "logTest") {
-      val text = call.argument<String>("message") ?: "Not Message..."
-      //println(text)
-      Log.e("tag1", text)
-      val e = Exception("test1")
-      val estr = Log.getStackTraceString(e)
-      val ret = Log.e("tag1", estr)
-      result.success(ret)
     } else {
       result.notImplemented()
     }

@@ -1,5 +1,3 @@
-<!--manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="io.github.miyu1.native_logger">
-</manifest -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="io.github.miyu1.simple_native_logger">
 </manifest>

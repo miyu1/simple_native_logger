@@ -1,4 +1,4 @@
-package io.github.miyu1.native_logger
+package io.github.miyu1.simple_native_logger
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -13,11 +13,11 @@ import org.mockito.Mockito
  * you can run them directly from IDEs that support JUnit such as Android Studio.
  */
 
-internal class NativeLoggerPluginTest {
+internal class SimpleNativeLoggerPluginTest {
   /*
   @Test
   fun onMethodCall_getPlatformVersion_returnsExpectedValue() {
-    val plugin = NativeLoggerPlugin()
+    val plugin = SimpleNativeLoggerPlugin()
 
     val call = MethodCall("getPlatformVersion", null)
     val mockResult: MethodChannel.Result = Mockito.mock(MethodChannel.Result::class.java)
@@ -25,7 +25,7 @@ internal class NativeLoggerPluginTest {
 
     Mockito.verify(mockResult).success("Android " + android.os.Build.VERSION.RELEASE)
   }
-   */
+  */
 
   @Test
   fun onMethodCall_log() {
@@ -45,5 +45,4 @@ internal class NativeLoggerPluginTest {
     println("onMethodCall_log end")
     //Mockito.verify(mockResult).success("Android " + android.os.Build.VERSION.RELEASE)
   }
-
 }
