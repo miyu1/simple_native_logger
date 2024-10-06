@@ -1,9 +1,9 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint native_logger.podspec` to validate before publishing.
+# Run `pod lib lint simple_native_logger.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'native_logger'
+  s.name             = 'simple_native_logger'
   s.version          = '0.1.0'
   s.summary          = 'Flutter plugin to use os.Logger from dart.'
   s.description      = <<-DESC
@@ -23,7 +23,7 @@ Flutter plugin to use os.Logger from dart.
 
   s.ios.dependency 'Flutter'
   s.osx.dependency 'FlutterMacOS'
-  s.ios.deployment_target = '14.0'
+  s.ios.deployment_target = '11.0'
   s.osx.deployment_target = '11.0'
   # If your plugin requires a privacy manifest, for example if it uses any
   # required reason APIs, update the PrivacyInfo.xcprivacy file to describe your

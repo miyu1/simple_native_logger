@@ -3,7 +3,7 @@ import FlutterMacOS
 import XCTest
 
 
-@testable import native_logger
+@testable import simple_native_logger
 
 // This demonstrates a simple unit test of the Swift portion of this plugin's implementation.
 //
@@ -12,7 +12,7 @@ import XCTest
 class RunnerTests: XCTestCase {
 
   func testGetPlatformVersion() {
-    let plugin = NativeLoggerPlugin()
+    let plugin = SimpleNativeLoggerPlugin()
 
     let call = FlutterMethodCall(methodName: "getPlatformVersion", arguments: [])
 

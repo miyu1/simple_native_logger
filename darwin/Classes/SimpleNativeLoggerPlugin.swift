@@ -6,15 +6,15 @@ import Flutter
 //import UIKit
 import os
 
-public class NativeLoggerPlugin: NSObject, FlutterPlugin {
+public class SimpleNativeLoggerPlugin: NSObject, FlutterPlugin {
   var tag = "flutter"
   var logger = os.Logger(subsystem: Bundle.main.bundleIdentifier!, category: "flutter")
   
   public static func register(with registrar: FlutterPluginRegistrar) {
 #if os(macOS)
-    let channel = FlutterMethodChannel(name: "native_logger", binaryMessenger: registrar.messenger)
+    let channel = FlutterMethodChannel(name: "simple_native_logger", binaryMessenger: registrar.messenger)
 #else
-    let channel = FlutterMethodChannel(name: "native_logger", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(name: "simple_native_logger", binaryMessenger: registrar.messenger())
 #endif    
     let instance = NativeLoggerPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)

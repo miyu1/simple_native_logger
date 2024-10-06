@@ -31,7 +31,7 @@ internal class SimpleNativeLoggerPluginTest {
   fun onMethodCall_log() {
     println("onMethodCall_log start")
 
-    val plugin = NativeLoggerPlugin()
+    val plugin = SimpleNativeLoggerPlugin()
 
     val args = mapOf(
       "level" to 3,

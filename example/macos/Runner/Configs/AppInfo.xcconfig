@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = native_logger_example
+PRODUCT_NAME = simple_native_logger_example
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = io.github.miyu1.nativeLoggerExample
+PRODUCT_BUNDLE_IDENTIFIER = io.github.miyu1.simpleNativeLoggerExample
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2024 io.github.miyu1. All rights reserved.
