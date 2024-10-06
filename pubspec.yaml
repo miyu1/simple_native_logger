@@ -1,4 +1,4 @@
-name: native_logger
+name: simple_native_logger
 description: "plugin to use platform native logging system"
 version: 0.1.0
 repository: https://github.com/miyu1/native_logger
@@ -35,13 +35,13 @@ flutter:
   plugin:
     platforms:
       android:
-        package: io.github.miyu1.native_logger
-        pluginClass: NativeLoggerPlugin
+        package: io.github.miyu1.simple_native_logger
+        pluginClass: SimpleNativeLoggerPlugin
       ios:
-        pluginClass: NativeLoggerPlugin
+        pluginClass: SimpleNativeLoggerPlugin
         sharedDarwinSource: true
       macos:
-        pluginClass: NativeLoggerPlugin
+        pluginClass: SimpleNativeLoggerPlugin
         sharedDarwinSource: true
 
   # To add assets to your plugin package, add an assets section, like this:
