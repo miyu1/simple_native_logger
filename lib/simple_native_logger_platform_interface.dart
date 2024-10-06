@@ -1,6 +1,6 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'native_logger_method_channel.dart';
+import 'simple_native_logger_method_channel.dart';
 
 abstract class NativeLoggerPlatform extends PlatformInterface {
   /// Constructs a NativeLoggerPlatform.

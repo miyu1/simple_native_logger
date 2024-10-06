@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:native_logger/native_logger.dart';
-import 'package:native_logger/native_logger_platform_interface.dart';
-import 'package:native_logger/native_logger_method_channel.dart';
+import 'package:simple_native_logger/simple_native_logger.dart';
+import 'package:simple_native_logger/simple_native_logger_platform_interface.dart';
+import 'package:simple_native_logger/simple_native_logger_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockNativeLoggerPlatform

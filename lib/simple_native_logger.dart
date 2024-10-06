@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 
-import 'native_logger_platform_interface.dart';
+import 'simple_native_logger_platform_interface.dart';
 
 enum LogLevel {
   verbose,
@@ -18,7 +18,7 @@ enum LogLevel {
   silent
 }
 
-class NativeLogger { 
+class SimpleNativeLogger { 
   // static initialize method.
   // This method must be called once before using NativeLogger class
   static void init() {
@@ -28,7 +28,7 @@ class NativeLogger {
   }
 
   // constructor
-  NativeLogger({
+  SimpleNativeLogger({
     this.tag = 'flutter',
     this.logLevel = LogLevel.verbose,
     this.stackCount = 3,
