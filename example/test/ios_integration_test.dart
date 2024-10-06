@@ -24,7 +24,8 @@ void main() {
   test("ios integration test", () async {
     const tag = "Stub";
 
-    final networks = await NetworkInterface.list();
+    final networks = await NetworkInterface.list(type: InternetAddressType.IPv4);
+    //final networks = await NetworkInterface.list();
     expect(networks, isNotEmpty, reason: "need network address of this host");
     final ipaddresses = networks.first.addresses;
     expect(ipaddresses, isNotEmpty);
