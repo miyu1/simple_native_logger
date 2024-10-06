@@ -4,18 +4,18 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'native_logger'
-  s.version          = '0.0.1'
-  s.summary          = 'A new Flutter plugin project.'
+  s.version          = '0.1.0'
+  s.summary          = 'Flutter plugin to use os.Logger from dart.'
   s.description      = <<-DESC
-A new Flutter plugin project.
+Flutter plugin to use os.Logger from dart.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://pub.dev/packages/simple_native_logger'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'Your Company' => 'miyu1.dev@gmail.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   #s.dependency 'Flutter'
-  s.platform = :ios, '12.0'
+  #s.platform = :ios, '12.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
@@ -23,7 +23,7 @@ A new Flutter plugin project.
 
   s.ios.dependency 'Flutter'
   s.osx.dependency 'FlutterMacOS'
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '14.0'
   s.osx.deployment_target = '11.0'
   # If your plugin requires a privacy manifest, for example if it uses any
   # required reason APIs, update the PrivacyInfo.xcprivacy file to describe your
