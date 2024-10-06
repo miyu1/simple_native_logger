@@ -9,7 +9,7 @@ Native logger is flutter plugin to put logs to these platform native logging sys
 -|-|-|-
 | Support |all| 11.0+ | 14.0+ |
 
-On Android, you can see logs using adb command.
+On Android, you can see the logs using adb command.
 
 ```
 $ adb shell 'logcat -v time --pid=$(pidof -s io.github.miyu1.native_logger_example)'
@@ -22,7 +22,7 @@ $ adb shell 'logcat -v time --pid=$(pidof -s io.github.miyu1.native_logger_examp
 10-05 19:03:19.449 E/MyApp   (22099): fatal log
 ```
 
-On macOS/iOS, you can see logs using macOS Console app,
+On macOS/iOS, you can see the logs using macOS Console app,
 ![Console App](images/console_app.png "Console App")  
 
 or by log command.
