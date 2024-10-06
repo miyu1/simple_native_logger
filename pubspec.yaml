@@ -1,7 +1,7 @@
 name: native_logger
-description: "native logger plugin"
-version: 0.0.1
-homepage:
+description: "plugin to use platform native logging system"
+version: 0.1.0
+repository: https://github.com/miyu1/native_logger
 
 environment:
   sdk: ^3.5.3
