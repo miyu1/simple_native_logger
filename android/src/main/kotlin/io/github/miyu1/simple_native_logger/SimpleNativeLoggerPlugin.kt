@@ -1,6 +1,7 @@
 package io.github.miyu1.simple_native_logger
 
 import androidx.annotation.NonNull
+import android.util.Log
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
