@@ -28,7 +28,7 @@ void main() async {
 
   try {
     await for(final value in timeoutSocket) {
-      print("command: $value");
+      debugPrint("command: $value");
       if(value == "exit") {
         break;
       }
@@ -75,7 +75,7 @@ void main() async {
       }
     }
   } on TimeoutException {
-    print("timeout");
+    debugPrint("timeout");
   }
   await socket.close();
 
@@ -95,7 +95,7 @@ void main() async {
     print("timeout ${DateTime.now()}");
   }
   */
-  print("exit");
+  debugPrint("exit");
   exit(0);
 
   //test("this is stub", (){});
