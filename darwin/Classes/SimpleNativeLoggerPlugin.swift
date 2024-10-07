@@ -16,7 +16,7 @@ public class SimpleNativeLoggerPlugin: NSObject, FlutterPlugin {
 #else
     let channel = FlutterMethodChannel(name: "simple_native_logger", binaryMessenger: registrar.messenger())
 #endif    
-    let instance = NativeLoggerPlugin()
+    let instance = SimpleNativeLoggerPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
