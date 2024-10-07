@@ -41,7 +41,7 @@ void main() {
     final logc = await ProcessRunner.start(
       "log",
       ["stream", "--level", "debug",
-       "--predicate", "subsystem = \"io.github.miyu1.nativeLoggerExample\"" ]
+       "--predicate", "subsystem = \"io.github.miyu1.simpleNativeLoggerExample\"" ]
     );
     /*
     await Future.delayed(const Duration(seconds: 3));
@@ -240,7 +240,7 @@ void main() {
     final logc = await ProcessRunner.start(
       "log",
       ["stream", "--level", "debug",
-       "--predicate", "subsystem = \"io.github.miyu1.nativeLoggerExample\"" ]
+       "--predicate", "subsystem = \"io.github.miyu1.simpleNativeLoggerExample\"" ]
     );
     /*
     await Future.delayed(const Duration(seconds: 3));

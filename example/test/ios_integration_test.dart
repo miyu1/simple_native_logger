@@ -42,7 +42,7 @@ void main() {
       "xcrun",
       [ "simctl", "spawn", deviceName,
         "log", "stream", "--level", "debug",
-       "--predicate", "subsystem = \"io.github.miyu1.nativeLoggerExample\"" ]
+       "--predicate", "subsystem = \"io.github.miyu1.simpleNativeLoggerExample\"" ]
     );
 
     debugPrint("start server process");
