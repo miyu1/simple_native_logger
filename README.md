@@ -12,14 +12,14 @@ Native logger is flutter plugin to put logs to these platform native logging sys
 On Android, you can see the logs using adb command.
 
 ```
-$ adb shell 'logcat -v time --pid=$(pidof -s io.github.miyu1.native_logger_example)'
-10-05 19:03:05.916 V/MyApp   (22099): verbose log
-10-05 19:03:07.849 D/MyApp   (22099): debug log
-10-05 19:03:07.849 D/MyApp   (22099): 	additional line
-10-05 19:03:11.140 I/MyApp   (22099): info log
-10-05 19:03:14.740 W/MyApp   (22099): warning log
-10-05 19:03:16.650 E/MyApp   (22099): error log
-10-05 19:03:19.449 E/MyApp   (22099): fatal log
+$ adb shell 'logcat -v time --pid=$(pidof -s io.github.miyu1.simple_native_logger_example)'
+10-07 17:41:51.515 V/MyApp   (27300): verbose log
+10-07 17:41:53.623 D/MyApp   (27300): debug log
+10-07 17:41:53.623 D/MyApp   (27300): 	additional line
+10-07 17:42:07.351 I/MyApp   (27300): info log
+10-07 17:42:09.065 W/MyApp   (27300): warning log
+10-07 17:42:11.107 E/MyApp   (27300): error log
+10-07 17:42:12.923 E/MyApp   (27300): fatal log
 ```
 
 On macOS/iOS, you can see the logs using macOS Console app,
@@ -29,29 +29,29 @@ or by log command.
 (For iOS simulator, run 'xcrun simctl spawn booted log' command with same parameter.)
 
 ```
-$ log stream  --level debug --predicate 'subsystem = "io.github.miyu1.nativeLoggerExample"'
-Filtering the log data using "subsystem == "io.github.miyu1.nativeLoggerExample""
+$ log stream  --level debug --predicate 'subsystem = "io.github.miyu1.simpleNativeLoggerExample"'
+Filtering the log data using "subsystem == "io.github.miyu1.simpleNativeLoggerExample""
 Timestamp                       Thread     Type        Activity             PID    TTL  
-2024-10-06 00:31:18.068529+0900 0x13983    Debug       0x0                  5224   0    native_logger_example: (native_logger) [io.github.miyu1.nativeLoggerExample:MyApp] verbose log
-2024-10-06 00:31:20.432184+0900 0x13983    Debug       0x0                  5224   0    native_logger_example: (native_logger) [io.github.miyu1.nativeLoggerExample:MyApp] debug log
+2024-10-07 17:27:14.563742+0900 0x12365d   Debug       0x0                  47876  0    simple_native_logger_example: (simple_native_logger) [io.github.miyu1.simpleNativeLoggerExample:MyApp] verbose log
+2024-10-07 17:27:19.193394+0900 0x12365d   Debug       0x0                  47876  0    simple_native_logger_example: (simple_native_logger) [io.github.miyu1.simpleNativeLoggerExample:MyApp] debug log
 	additional line
-2024-10-06 00:31:22.347631+0900 0x13983    Info        0x0                  5224   0    native_logger_example: (native_logger) [io.github.miyu1.nativeLoggerExample:MyApp] info log 
-2024-10-06 00:31:23.780923+0900 0x13983    Default     0x0                  5224   0    native_logger_example: (native_logger) [io.github.miyu1.nativeLoggerExample:MyApp] warning log 
-2024-10-06 00:31:24.963804+0900 0x13983    Error       0x0                  5224   0    native_logger_example: (native_logger) [io.github.miyu1.nativeLoggerExample:MyApp] error log 
-2024-10-06 00:31:26.213910+0900 0x13983    Fault       0x2c32f              5224   0    native_logger_example: (native_logger) [io.github.miyu1.nativeLoggerExample:MyApp] fatal log 
+2024-10-07 17:27:22.057604+0900 0x12365d   Info        0x0                  47876  0    simple_native_logger_example: (simple_native_logger) [io.github.miyu1.simpleNativeLoggerExample:MyApp] info log
+2024-10-07 17:27:23.590778+0900 0x12365d   Default     0x0                  47876  0    simple_native_logger_example: (simple_native_logger) [io.github.miyu1.simpleNativeLoggerExample:MyApp] warning log 
+2024-10-07 17:27:24.658391+0900 0x12365d   Error       0x0                  47876  0    simple_native_logger_example: (simple_native_logger) [io.github.miyu1.simpleNativeLoggerExample:MyApp] error log
+2024-10-07 17:27:26.124623+0900 0x12365d   Fault       0x213311             47876  0    simple_native_logger_example: (simple_native_logger) [io.github.miyu1.simpleNativeLoggerExample:MyApp] fatal log 
 ```
 
 ## Usage
 
 ```dart
-import 'package:native_logger/native_logger.dart';
+import 'package:simple_native_logger/simple_native_logger.dart';
 
 void main() {
-  NativeLogger.init();
+  SimpleNativeLogger.init();
   ...
 }
   ...
-  final _nativeLogger = NativeLogger(tag: "MyApp");
+  final _nativeLogger = SimpleNativeLogger(tag: "MyApp");
   _nativeLogger.w("<log message>");
 
   try {
@@ -61,27 +61,28 @@ void main() {
   }
 ```
 
-To use native_logger, you have to call NativeLogger.init() once, may be in main.  
-Then anywhere in code, you can use NativeLogger class for logging.  
+To use native_logger, you have to call SimpleNativeLogger.init() once, may be in main.  
+Then anywhere in code, you can use SimpleNativeLogger class for logging.  
 You can also pass optional stack trace parameter.
 
-Following table lists NativeLogger methods and corresponding method on each platform. 
+Following table lists SimpleNativeLogger methods and corresponding method on each platform. 
 
-| native_logger | android | iOS/macos | 
+| simple_native_logger | android | iOS/macos | 
 -|-|-
-| NativeLogger.v | Log.v | Logger.debug |
-| NativeLogger.d | Log.d | Logger.debug |
-| NativeLogger.i | Log.i | Logger.info |
-| NativeLogger.w | Log.w | Logger.notice |
-| NativeLogger.e | Log.e | Logger.error |
-| NativeLogger.f | Log.wtf | Logger.fault |
+| SimpleNativeLogger.v | Log.v | Logger.debug |
+| SimpleNativeLogger.d | Log.d | Logger.debug |
+| SimpleNativeLogger.i | Log.i | Logger.info |
+| SimpleNativeLogger.w | Log.w | Logger.notice |
+| SimpleNativeLogger.e | Log.e | Logger.error |
+| SimpleNativeLogger.f | Log.wtf | Logger.fault |
 
 On Android, android.util.Log class is used to implement.  
-'tag' parameter of NativeLogger is used as tag parameter of the Log class.  
+'tag' parameter of SimpleNativeLogger is used as tag parameter of the Log class.  
 Log.isLoggable is also called before log.
 
 On macOS/iOS, os.Logger class is used to implement.  
-'tag' parameter of NativeLogger is used as category parameter of the Logger class.  
+'tag' parameter of SimpleNativeLogger is used as
+category parameter of the Logger class.  
 subsystem parameter is fixed to bundle ID.
 
 Other constructor parameters are following:
@@ -104,7 +105,8 @@ If stack trace parameter is passed to loggging methods, this parameter is ignore
 
 By default, verbose and debug log is not shown.  
 Use adb command to change behavior.  
-Currently android log is also shown to flutter console, and the adb settings also affects to it.
+Currently android log is also shown to flutter console,
+and the adb settings also affects to it.
 
 ```
 $ adb shell
@@ -112,13 +114,13 @@ emu64xa:/ $ setprop log.tag.MyApp V
 emu64xa:/ $ exit
 $ flutter run
 ...
-V/MyApp   (32405): verbose log (package:native_logger_example/main.dart:87:33)
-D/MyApp   (32405): debug log
-D/MyApp   (32405): 	additional line (package:native_logger_example/main.dart:93:33)
-I/MyApp   (32405): info log (package:native_logger_example/main.dart:99:33)
-W/MyApp   (32405): warning log (package:native_logger_example/main.dart:105:33)
-E/MyApp   (32405): error log (package:native_logger_example/main.dart:111:33)
-E/MyApp   (32405): fatal log (package:native_logger_example/main.dart:117:33)
+V/MyApp   ( 4150): verbose log (package:simple_native_logger_example/main.dart:87:33)
+D/MyApp   ( 4150): debug log
+D/MyApp   ( 4150): 	additional line (package:simple_native_logger_example/main.dart:93:33)
+I/MyApp   ( 4150): info log (package:simple_native_logger_example/main.dart:99:33)
+W/MyApp   ( 4150): warning log (package:simple_native_logger_example/main.dart:105:33)
+E/MyApp   ( 4150): error log (package:simple_native_logger_example/main.dart:111:33)
+E/MyApp   ( 4150): fatal log (package:simple_native_logger_example/main.dart:117:33)
 ```
 
 MyApp is a tag parameter I used in exmaple app.
@@ -130,6 +132,7 @@ $ adb shell
 emu64xa:/ $ setprop log.tag.MyApp ""
 emu64xa:/ $ exit
 ```
+
 ## Notice for macOS/iOS
 By default, verbose, debug and info log is not shown by console app or log command.  
 To change this behavior on console app, use Action menu of it.
@@ -144,11 +147,11 @@ isEchoNeeded and echo method of NativeLogger do the job.
 
 ```
 $ flutter run
-flutter: [MyApp:V] verbose log (package:native_logger_example/main.dart:87:33)
+flutter: [MyApp:V] verbose log (package:simple_native_logger_example/main.dart:87:33)
 flutter: [MyApp:D] debug log
-flutter: 	additional line (package:native_logger_example/main.dart:93:33)
-flutter: [MyApp:I] info log (package:native_logger_example/main.dart:99:33)
-flutter: [MyApp:W] warning log (package:native_logger_example/main.dart:105:33)
-flutter: [MyApp:E] error log (package:native_logger_example/main.dart:111:33)
-flutter: [MyApp:F] fatal log (package:native_logger_example/main.dart:117:33)
+flutter: 	additional line (package:simple_native_logger_example/main.dart:93:33)
+flutter: [MyApp:I] info log (package:simple_native_logger_example/main.dart:99:33)
+flutter: [MyApp:W] warning log (package:simple_native_logger_example/main.dart:105:33)
+flutter: [MyApp:E] error log (package:simple_native_logger_example/main.dart:111:33)
+flutter: [MyApp:F] fatal log (package:simple_native_logger_example/main.dart:117:33)
 ```
