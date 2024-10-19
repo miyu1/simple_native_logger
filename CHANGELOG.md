@@ -1,3 +1,7 @@
+# 0.1.3 (2024 Oct. 19)
+
+* documentation typo
+
 # 0.1.2 (2024 Oct. 19)
 
 * update documentation

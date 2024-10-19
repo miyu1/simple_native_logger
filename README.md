@@ -3,8 +3,8 @@
 Android has logcat system for application logging,
 and macOS/iOS also has similar logging system.
 
-Native logger is flutter plugin to put logs to these platform native logging system.
-It also shows log to flutter console. 
+Native logger is flutter plugin to put logs to these platform native logging system.  
+It also shows log to console. 
 
 | |Android|macOS|iOS|
 -|-|-|-
