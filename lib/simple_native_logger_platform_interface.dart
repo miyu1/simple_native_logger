@@ -8,7 +8,8 @@ abstract class SimpleNativeLoggerPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static SimpleNativeLoggerPlatform _instance = MethodChannelSimpleNativeLogger();
+  static SimpleNativeLoggerPlatform _instance =
+      MethodChannelSimpleNativeLogger();
 
   /// The default instance of [SimpleNativeLoggerPlatform] to use.
   ///

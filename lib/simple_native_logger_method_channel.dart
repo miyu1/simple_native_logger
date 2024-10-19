@@ -12,11 +12,10 @@ class MethodChannelSimpleNativeLogger extends SimpleNativeLoggerPlatform {
   @override
   Future<void> log(int level, String tag, String message) async {
     final arguments = {
-      'level' : level,
-      'tag' : tag,
+      'level': level,
+      'tag': tag,
       'message': message,
     };
     await methodChannel.invokeMethod('log', arguments);
   }
-
 }

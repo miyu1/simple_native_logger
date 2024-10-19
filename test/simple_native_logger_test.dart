@@ -9,13 +9,12 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 class MockSimpleNativeLoggerPlatform
     with MockPlatformInterfaceMixin
     implements SimpleNativeLoggerPlatform {
-
   int level = 0;
   String tag = "";
   String message = "";
 
   @override
-  Future<void> log(int level, String tag, String message) async {  
+  Future<void> log(int level, String tag, String message) async {
     this.level = level;
     this.tag = tag;
     this.message = message;
@@ -29,34 +28,36 @@ class MockSimpleNativeLoggerPlatform
 }
 
 // utility fuction to log by each level
-void testUtilLogByLevel(SimpleNativeLogger logger, LogLevel level, Object message, {StackTrace? stack}) {
-  switch(level) {
-  case LogLevel.verbose :
-    logger.v(message, stack: stack);
-    break;
-  case LogLevel.debug :
-    logger.d(message, stack: stack);
-    break;
-  case LogLevel.info :
-    logger.i(message, stack: stack);
-    break;
-  case LogLevel.warning :
-    logger.w(message, stack: stack);
-    break;
-  case LogLevel.error :
-    logger.e(message, stack: stack);
-    break;
-  case LogLevel.fatal :
-    logger.f(message, stack: stack);
-    break;
-  default :
-    break;
+void testUtilLogByLevel(
+    SimpleNativeLogger logger, LogLevel level, Object message,
+    {StackTrace? stack}) {
+  switch (level) {
+    case LogLevel.verbose:
+      logger.v(message, stack: stack);
+      break;
+    case LogLevel.debug:
+      logger.d(message, stack: stack);
+      break;
+    case LogLevel.info:
+      logger.i(message, stack: stack);
+      break;
+    case LogLevel.warning:
+      logger.w(message, stack: stack);
+      break;
+    case LogLevel.error:
+      logger.e(message, stack: stack);
+      break;
+    case LogLevel.fatal:
+      logger.f(message, stack: stack);
+      break;
+    default:
+      break;
   }
 }
 
 void main() {
-  final SimpleNativeLoggerPlatform initialPlatform = 
-    SimpleNativeLoggerPlatform.instance;
+  final SimpleNativeLoggerPlatform initialPlatform =
+      SimpleNativeLoggerPlatform.instance;
   SimpleNativeLogger.init();
 
   test('MethodChannelNativeLogger is the default instance', () {
@@ -77,12 +78,12 @@ void main() {
     const message = "LogMessage";
 
     SimpleNativeLogger nativeLoggerPlugin =
-      SimpleNativeLogger(tag: tag, addLineNumber: false);
-    MockSimpleNativeLoggerPlatform fakePlatform = 
-      MockSimpleNativeLoggerPlatform();
+        SimpleNativeLogger(tag: tag, addLineNumber: false);
+    MockSimpleNativeLoggerPlatform fakePlatform =
+        MockSimpleNativeLoggerPlatform();
     SimpleNativeLoggerPlatform.instance = fakePlatform;
 
-    for(final level in LogLevel.values) {
+    for (final level in LogLevel.values) {
       if (level == LogLevel.silent) {
         continue;
       }
@@ -101,14 +102,11 @@ void main() {
     const message = "LogMessage";
 
     SimpleNativeLogger nativeLoggerPlugin = SimpleNativeLogger(
-      tag: tag,
-      logLevel: LogLevel.warning,
-      addLineNumber: false
-    );
+        tag: tag, logLevel: LogLevel.warning, addLineNumber: false);
     final fakePlatform = MockSimpleNativeLoggerPlatform();
     SimpleNativeLoggerPlatform.instance = fakePlatform;
 
-    for(final level in [LogLevel.warning, LogLevel.error, LogLevel.fatal]) {
+    for (final level in [LogLevel.warning, LogLevel.error, LogLevel.fatal]) {
       debugPrint("testing for level: $level");
       fakePlatform.clear();
       testUtilLogByLevel(nativeLoggerPlugin, level, message);
@@ -119,7 +117,7 @@ void main() {
       expect(fakePlatform.message, message);
     }
 
-    for(final level in [LogLevel.verbose, LogLevel.debug, LogLevel.info]) {
+    for (final level in [LogLevel.verbose, LogLevel.debug, LogLevel.info]) {
       debugPrint("testing for level: $level");
       fakePlatform.clear();
       testUtilLogByLevel(nativeLoggerPlugin, level, message);
@@ -135,12 +133,12 @@ void main() {
     const tag = "TAG";
     const message = "LogMessage";
 
-    SimpleNativeLogger nativeLoggerPlugin = 
-      SimpleNativeLogger(tag: tag, addLineNumber: true);
+    SimpleNativeLogger nativeLoggerPlugin =
+        SimpleNativeLogger(tag: tag, addLineNumber: true);
     final fakePlatform = MockSimpleNativeLoggerPlatform();
     SimpleNativeLoggerPlatform.instance = fakePlatform;
 
-    for(final level in LogLevel.values) {
+    for (final level in LogLevel.values) {
       if (level == LogLevel.silent) {
         continue;
       }
@@ -153,7 +151,8 @@ void main() {
       expect(fakePlatform.level, level.index);
       expect(fakePlatform.tag, tag);
       expect(fakePlatform.message, startsWith(message));
-      expect(fakePlatform.message, contains('native_logger_test')); // this filename
+      expect(fakePlatform.message,
+          contains('native_logger_test')); // this filename
     }
   });
 
@@ -162,8 +161,8 @@ void main() {
     final ex = Exception("log message");
     final message = ex.toString();
 
-    SimpleNativeLogger nativeLoggerPlugin = 
-      SimpleNativeLogger(tag: tag, stackCount: -1);
+    SimpleNativeLogger nativeLoggerPlugin =
+        SimpleNativeLogger(tag: tag, stackCount: -1);
     final fakePlatform = MockSimpleNativeLoggerPlatform();
     SimpleNativeLoggerPlatform.instance = fakePlatform;
 
@@ -171,7 +170,7 @@ void main() {
     //debugPrint("stack: $stack");
     final actualStackCount = stack.toString().split("\n").length;
 
-    for(final level in LogLevel.values) {
+    for (final level in LogLevel.values) {
       if (level == LogLevel.silent) {
         continue;
       }
@@ -197,8 +196,8 @@ void main() {
     final message = ex.toString();
     const stackCount = 2;
 
-    final nativeLoggerPlugin = 
-      SimpleNativeLogger(tag: tag, stackCount: stackCount);
+    final nativeLoggerPlugin =
+        SimpleNativeLogger(tag: tag, stackCount: stackCount);
     final fakePlatform = MockSimpleNativeLoggerPlatform();
     SimpleNativeLoggerPlatform.instance = fakePlatform;
 
@@ -206,7 +205,7 @@ void main() {
     //debugPrint("stack: $stack");
     //final actualStackCount = stack.toString().split("\n").length;
 
-    for(final level in LogLevel.values) {
+    for (final level in LogLevel.values) {
       if (level == LogLevel.silent) {
         continue;
       }
@@ -224,5 +223,5 @@ void main() {
       expect(messageList.length, stackCount + 2);
       expect(messageList[1], "stack trace:");
     }
-  });    
+  });
 }

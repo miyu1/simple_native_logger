@@ -33,22 +33,22 @@ void main(List<String> args) async {
       if (req.uri.path == "/ws") {
         var socket = await WebSocketTransformer.upgrade(req);
         socket.listen(
-          (data){
+          (data) {
             print("data: $data");
             // handshake
             if (data == "ready") {
               listener = socket;
               print("listener connected");
               sender?.add("ok");
-            } else if(data == "waiting") {
+            } else if (data == "waiting") {
               sender = socket;
               print("sender connected");
               if (listener != null) {
                 sender?.add("ok");
               }
-            } else if(socket == sender){
+            } else if (socket == sender) {
               listener?.add(data);
-            } else  if(socket == listener) {
+            } else if (socket == listener) {
               sender?.add(data);
             }
           },
@@ -56,7 +56,7 @@ void main(List<String> args) async {
             if (socket == sender) {
               print("sender closed");
               sender = null;
-            } else if(socket == listener) {
+            } else if (socket == listener) {
               print("listener closed");
               listener = null;
             }
@@ -67,15 +67,13 @@ void main(List<String> args) async {
         );
       }
     });
-  },
-  (error, stack) {
+  }, (error, stack) {
     //print("error: $error");
     if (error is ExitException) {
       server.close();
       exit(0);
     }
-  }
-  ); 
+  });
 }
 
 class ExitException implements Exception {

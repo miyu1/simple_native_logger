@@ -9,7 +9,7 @@ import 'common.dart';
 // but not with flutter run command or vscode ,
 // because they try to run this code in target OS.
 //
-// I have to test what is outputted to stdout, so this test is complicated. 
+// I have to test what is outputted to stdout, so this test is complicated.
 //
 // Proccesses needed for this test is,
 // - target OS
@@ -17,14 +17,15 @@ import 'common.dart';
 // - host OS
 //   - this test code.
 //   - websocket server for communicate with test stub
-//     (test/websocket_server.dart) 
+//     (test/websocket_server.dart)
 //   - adb command for Android
 //
 void main() {
   test("android integration test", () async {
     const tag = "Stub";
 
-    final networks = await NetworkInterface.list(type: InternetAddressType.IPv4);
+    final networks =
+        await NetworkInterface.list(type: InternetAddressType.IPv4);
     //final networks = await NetworkInterface.list();
     expect(networks, isNotEmpty, reason: "need network address of this host");
     final ipaddresses = networks.first.addresses;
@@ -37,12 +38,9 @@ void main() {
     final deviceName = await findAndroidDevice();
     debugPrint("android device: $deviceName");
     expect(deviceName, isNotEmpty, reason: "connect any android device.");
-    
+
     debugPrint("start adb process");
-    final adbc = await ProcessRunner.start(
-      "adb",
-      ["-s", deviceName, "shell" ]
-    );
+    final adbc = await ProcessRunner.start("adb", ["-s", deviceName, "shell"]);
     adbc.process.stdin.writeln("setprop log.tag.$tag V");
     const s = "logcat -v brief $tag:V flutter:V *:S";
     //print("adb command: $s");
@@ -57,9 +55,7 @@ void main() {
 
     debugPrint("start server process");
     final server = await ProcessRunner.start(
-      "dart",
-      ["run", "test/websocket_server.dart", ipaddress]
-    );
+        "dart", ["run", "test/websocket_server.dart", ipaddress]);
     await Future.delayed(const Duration(seconds: 1));
     /*
     for(final line in server.stdout) {
@@ -70,9 +66,14 @@ void main() {
     debugPrint("start stub process");
     final stub = await ProcessRunner.start(
       "flutter",
-      ["-d", deviceName, "run", "-t", "integration_test/test_stub.dart",
-       "--dart-define=ARGS=$ipaddress"
-       ],
+      [
+        "-d",
+        deviceName,
+        "run",
+        "-t",
+        "integration_test/test_stub.dart",
+        "--dart-define=ARGS=$ipaddress"
+      ],
       //["-d", "macos", "run", "-t", "integration_test/test_stub.dart"],
     );
 
@@ -80,13 +81,13 @@ void main() {
 
     // have to wait flutter to build and run test_stub
     var timeoutSocket = socket.timeout(const Duration(seconds: 60));
-    
+
     // handshake
     socket.add("waiting");
     try {
       var command = "";
       var state = 0;
-      await for(final response in timeoutSocket) {
+      await for (final response in timeoutSocket) {
         //print("response: $response");
         expect(response, "ok");
 
@@ -95,35 +96,49 @@ void main() {
         Iterable<String> adblogs = [];
 
         // check result
-        switch(state) {
-        case 1:
-          stublogs = stub.stdout.where((line) => line.contains("V/$tag") && line.contains(command));
-          adblogs  = adbc.stdout.where((line) => line.contains("V/$tag") && line.contains(command));
-          break;
-        case 2:
-          stublogs = stub.stdout.where((line) => line.contains("D/$tag") && line.contains(command));
-          adblogs  = adbc.stdout.where((line) => line.contains("D/$tag") && line.contains(command));
-          break;
-        case 3:
-          stublogs = stub.stdout.where((line) => line.contains("I/$tag") && line.contains(command));
-          adblogs  = adbc.stdout.where((line) => line.contains("I/$tag") && line.contains(command));
-          break;
-        case 4:
-          stublogs = stub.stdout.where((line) => line.contains("W/$tag") && line.contains(command));
-          adblogs  = adbc.stdout.where((line) => line.contains("W/$tag") && line.contains(command));
-          break;
-        case 5:
-          stublogs = stub.stdout.where((line) => line.contains("E/$tag") && line.contains(command));
-          adblogs  = adbc.stdout.where((line) => line.contains("E/$tag") && line.contains(command));
-          break;
-        case 6:
-          stublogs = stub.stdout.where((line) => line.contains("E/$tag") && line.contains(command));
-          adblogs  = adbc.stdout.where((line) => line.contains("E/$tag") && line.contains(command));
-          break;
-        case 7:
-          stublogs = stub.stdout.where((line) => line.contains("E/$tag") && line.contains(command));
-          adblogs  = adbc.stdout.where((line) => line.contains("E/$tag") && line.contains(command));
-          break;
+        switch (state) {
+          case 1:
+            stublogs = stub.stdout.where(
+                (line) => line.contains("V/$tag") && line.contains(command));
+            adblogs = adbc.stdout.where(
+                (line) => line.contains("V/$tag") && line.contains(command));
+            break;
+          case 2:
+            stublogs = stub.stdout.where(
+                (line) => line.contains("D/$tag") && line.contains(command));
+            adblogs = adbc.stdout.where(
+                (line) => line.contains("D/$tag") && line.contains(command));
+            break;
+          case 3:
+            stublogs = stub.stdout.where(
+                (line) => line.contains("I/$tag") && line.contains(command));
+            adblogs = adbc.stdout.where(
+                (line) => line.contains("I/$tag") && line.contains(command));
+            break;
+          case 4:
+            stublogs = stub.stdout.where(
+                (line) => line.contains("W/$tag") && line.contains(command));
+            adblogs = adbc.stdout.where(
+                (line) => line.contains("W/$tag") && line.contains(command));
+            break;
+          case 5:
+            stublogs = stub.stdout.where(
+                (line) => line.contains("E/$tag") && line.contains(command));
+            adblogs = adbc.stdout.where(
+                (line) => line.contains("E/$tag") && line.contains(command));
+            break;
+          case 6:
+            stublogs = stub.stdout.where(
+                (line) => line.contains("E/$tag") && line.contains(command));
+            adblogs = adbc.stdout.where(
+                (line) => line.contains("E/$tag") && line.contains(command));
+            break;
+          case 7:
+            stublogs = stub.stdout.where(
+                (line) => line.contains("E/$tag") && line.contains(command));
+            adblogs = adbc.stdout.where(
+                (line) => line.contains("E/$tag") && line.contains(command));
+            break;
         }
 
         if (state >= 1) {
@@ -144,8 +159,10 @@ void main() {
           */
         }
         if (state == 7) {
-          stublogs = stub.stdout.where((line) => line.contains("E/$tag") && line.contains("stack trace"));
-          adblogs  = adbc.stdout.where((line) => line.contains("E/$tag") && line.contains("stack trace"));
+          stublogs = stub.stdout.where((line) =>
+              line.contains("E/$tag") && line.contains("stack trace"));
+          adblogs = adbc.stdout.where((line) =>
+              line.contains("E/$tag") && line.contains("stack trace"));
           expect(stublogs, isNotEmpty);
           expect(adblogs, isNotEmpty);
         }
@@ -158,42 +175,42 @@ void main() {
         stub.clearStdout();
         adbc.clearStdout();
         // send command to stub
-        switch(state) {
-        case 1:
-          command = "verbose";
-          socket.add(command);
-          break;
-        case 2:
-          command = "debug";
-          socket.add(command);
-          break;
-        case 3:
-          command = "info";
-          socket.add(command);
-          break;
-        case 4:
-          command = "warning";
-          socket.add(command);
-          break;
-        case 5:
-          command = "error";
-          socket.add(command);
-          break;
-        case 6:
-          command = "fatal";
-          socket.add(command);
-          break;
-        case 7:
-          command = "exception";
-          socket.add(command);
-          break;
+        switch (state) {
+          case 1:
+            command = "verbose";
+            socket.add(command);
+            break;
+          case 2:
+            command = "debug";
+            socket.add(command);
+            break;
+          case 3:
+            command = "info";
+            socket.add(command);
+            break;
+          case 4:
+            command = "warning";
+            socket.add(command);
+            break;
+          case 5:
+            command = "error";
+            socket.add(command);
+            break;
+          case 6:
+            command = "fatal";
+            socket.add(command);
+            break;
+          case 7:
+            command = "exception";
+            socket.add(command);
+            break;
         }
         debugPrint("$command test");
       }
     } catch (ex, stack) {
       // timeout?
       debugPrint("no response: $ex\n$stack");
-      for(final line in stub.stdout) {
+      for (final line in stub.stdout) {
         debugPrint("stub: $line");
       }
       fail("no response from stub");
@@ -212,10 +229,7 @@ void main() {
     adbc.process.kill();
     await adbc.process.exitCode;
 
-    final adb2 = await ProcessRunner.start(
-      "adb",
-      ["-s", deviceName, "shell" ]
-    );
+    final adb2 = await ProcessRunner.start("adb", ["-s", deviceName, "shell"]);
     adb2.process.stdin.writeln("setprop log.tag.$tag \"\"");
     adb2.process.stdin.writeln("exit");
     await adb2.process.exitCode;
@@ -228,24 +242,26 @@ void main() {
     }
     */
   },
-  // need retry because in some cases stub fails to start
-  // when it takes long time to build and start stub and timeout exception occurs
-  timeout: const Timeout.factor(3), retry: 3);
+      // need retry because in some cases stub fails to start
+      // when it takes long time to build and start stub and timeout exception occurs
+      timeout: const Timeout.factor(3),
+      retry: 3);
 }
 
 Future<String> findAndroidDevice() async {
-    final runner = await ProcessRunner.start(
-      "flutter", ["devices"],
-    );
-    await runner.process.exitCode;
+  final runner = await ProcessRunner.start(
+    "flutter",
+    ["devices"],
+  );
+  await runner.process.exitCode;
 
-    final devices = runner.stdout.where(
-      (line) => line.contains(" • ") && line.contains("android"));
-    if (devices.isEmpty) {
-      return "";
-    }
-    final device = devices.first;
-    final elems = device.split(" • ");
-    //print("elements: $elems");
-    return elems[1].trim();
+  final devices = runner.stdout
+      .where((line) => line.contains(" • ") && line.contains("android"));
+  if (devices.isEmpty) {
+    return "";
+  }
+  final device = devices.first;
+  final elems = device.split(" • ");
+  //print("elements: $elems");
+  return elems[1].trim();
 }

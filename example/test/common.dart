@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 Future<WebSocket> connect(String url) async {
-  SocketException? socketEx; 
+  SocketException? socketEx;
 
-  for(var retry = 0; retry < 5; retry ++) {
+  for (var retry = 0; retry < 5; retry++) {
     try {
       final socket = await WebSocket.connect(url);
       return socket;
@@ -30,17 +30,18 @@ class ProcessRunner {
   List<String> stdout = [];
 
   // do not use
-  ProcessRunner(this.executable, this.arguments, this.process){
+  ProcessRunner(this.executable, this.arguments, this.process) {
     final stdoutStream = process.stdout
-      //.timeout(const Duration(seconds: 10))
-      .transform(systemEncoding.decoder)
-      .transform(const LineSplitter());
-    stdoutStream.listen((value){
+        //.timeout(const Duration(seconds: 10))
+        .transform(systemEncoding.decoder)
+        .transform(const LineSplitter());
+    stdoutStream.listen((value) {
       stdout.add(value);
     });
   }
 
-  static Future<ProcessRunner> start(String executable, List<String> arguments) async {
+  static Future<ProcessRunner> start(
+      String executable, List<String> arguments) async {
     final process = await Process.start(executable, arguments);
     final ret = ProcessRunner(executable, arguments, process);
     return ret;

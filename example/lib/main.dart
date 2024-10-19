@@ -16,8 +16,7 @@ void main() {
   };
 
   PlatformDispatcher.instance.onError = (error, stack) {
-    if (error is PlatformException ||
-        error is MissingPluginException) {
+    if (error is PlatformException || error is MissingPluginException) {
       // error on method channel. cannot use native logger
       debugPrint("$error\n$stack");
     } else {
@@ -38,7 +37,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   //String _platformVersion = 'Unknown';
-  final _nativeLogger = SimpleNativeLogger(tag: "MyApp" );
+  final _nativeLogger = SimpleNativeLogger(tag: "MyApp");
 
   @override
   void initState() {
@@ -59,41 +58,35 @@ class _MyAppState extends State<MyApp> {
             children: [
               //Text('Running on: $_platformVersion\n'),
               ElevatedButton(
-                onPressed: () {
-                  _nativeLogger.v("verbose log");
-                },
-                child: const Text('verbose log')
-              ),
+                  onPressed: () {
+                    _nativeLogger.v("verbose log");
+                  },
+                  child: const Text('verbose log')),
               ElevatedButton(
-                onPressed: () {
-                  _nativeLogger.d("debug log\n\tadditional line");
-                },
-                child: const Text('debug log')
-              ),
+                  onPressed: () {
+                    _nativeLogger.d("debug log\n\tadditional line");
+                  },
+                  child: const Text('debug log')),
               ElevatedButton(
-                onPressed: () {
-                  _nativeLogger.i("info log");
-                },
-                child: const Text('info log')
-              ),
+                  onPressed: () {
+                    _nativeLogger.i("info log");
+                  },
+                  child: const Text('info log')),
               ElevatedButton(
-                onPressed: () {
-                  _nativeLogger.w("warning log");
-                },
-                child: const Text('warning log')
-              ),
+                  onPressed: () {
+                    _nativeLogger.w("warning log");
+                  },
+                  child: const Text('warning log')),
               ElevatedButton(
-                onPressed: () {
-                  _nativeLogger.e("error log");
-                },
-                child: const Text('error log')
-              ),
+                  onPressed: () {
+                    _nativeLogger.e("error log");
+                  },
+                  child: const Text('error log')),
               ElevatedButton(
-                onPressed: () {
-                  _nativeLogger.f("fatal log");
-                },
-                child: const Text('fatal log')
-              ),
+                  onPressed: () {
+                    _nativeLogger.f("fatal log");
+                  },
+                  child: const Text('fatal log')),
               /*
               ElevatedButton(
                 onPressed: () {
@@ -103,30 +96,25 @@ class _MyAppState extends State<MyApp> {
               ),
               */
               ElevatedButton(
-                onPressed: () {
-                  try {
-                    const s = 'abc';
-                    s.substring(-1);
-                  } catch (ex, stack) {
-                    _nativeLogger.e(ex, stack: stack);
-                  }
-                },
-                child: const Text('exception')
-              ),
+                  onPressed: () {
+                    try {
+                      const s = 'abc';
+                      s.substring(-1);
+                    } catch (ex, stack) {
+                      _nativeLogger.e(ex, stack: stack);
+                    }
+                  },
+                  child: const Text('exception')),
               ElevatedButton(
-                onPressed: () {
-                  throw Exception('uncaught exception');
-                  //_nativeLoggerPlugin.logTest2('logTest1');
-                },
-                child: const Text('uncaught exception')
-              ),
+                  onPressed: () {
+                    throw Exception('uncaught exception');
+                  },
+                  child: const Text('uncaught exception')),
               ElevatedButton(
-                onPressed: () async {
-                  throw Exception('uncaught exception (async)');
-                  //_nativeLoggerPlugin.logTest2('logTest1');
-                },
-                child: const Text('uncaught exception (async)')
-              ),
+                  onPressed: () async {
+                    throw Exception('uncaught exception (async)');
+                  },
+                  child: const Text('uncaught exception (async)')),
             ],
           ),
         ),
