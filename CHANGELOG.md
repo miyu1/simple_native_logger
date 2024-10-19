@@ -1,3 +1,8 @@
+# 0.1.2 (2024 Oct. 19)
+
+* update documentation
+* format code
+
 # 0.1.1
 
 * add real implementation.
