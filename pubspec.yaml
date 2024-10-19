@@ -1,5 +1,7 @@
 name: simple_native_logger
-description: "plugin to use platform native logging system"
+description: 
+  Plugin to use platform native logging system.
+  Log is also prinnted to console if needed.
 version: 0.1.1
 repository: https://github.com/miyu1/native_logger
 

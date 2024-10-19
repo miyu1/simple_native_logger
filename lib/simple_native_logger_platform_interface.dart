@@ -10,19 +10,20 @@ abstract class SimpleNativeLoggerPlatform extends PlatformInterface {
 
   static SimpleNativeLoggerPlatform _instance = MethodChannelSimpleNativeLogger();
 
-  /// The default instance of [NativeLoggerPlatform] to use.
+  /// The default instance of [SimpleNativeLoggerPlatform] to use.
   ///
-  /// Defaults to [MethodChannelNativeLogger].
+  /// Defaults to [MethodChannelSimpleNativeLogger].
   static SimpleNativeLoggerPlatform get instance => _instance;
 
   /// Platform-specific implementations should set this with their own
-  /// platform-specific class that extends [NativeLoggerPlatform] when
+  /// platform-specific class that extends [SimpleNativeLoggerPlatform] when
   /// they register themselves.
   static set instance(SimpleNativeLoggerPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }
 
+  /// Invoke logging function using method channel
   Future<void> log(int level, String tag, String message) {
     throw UnimplementedError('log() has not been implemented.');
   }

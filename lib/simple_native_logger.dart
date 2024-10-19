@@ -6,28 +6,66 @@ import 'package:flutter/foundation.dart';
 
 import 'simple_native_logger_platform_interface.dart';
 
+/// Log level. This also is used as [SimpleNativeLogger.logLevel] property.
 enum LogLevel {
+  /// Verbose log level. This is lowest log level.
   verbose,
+  /// Debug log level
   debug,
+  /// Information log level 
   info,
+  /// Warning log level
   warning,
+  /// Error log level
   error,
+  /// Fatal log level. This is highest log level.
   fatal,
-  // special log level to suppress all log output
-  // do not use this with log method
+  /// Special log level to suppress all log output.
   silent
 }
 
+/// Main class of this plugin.
+/// 
+/// Example :
+/// ```dart
+/// import 'package:simple_native_logger/simple_native_logger.dart';
+/// 
+/// void main() {
+///   SimpleNativeLogger.init();
+///   ...
+/// }
+///   ...
+///   final _nativeLogger = SimpleNativeLogger(tag: "MyApp");
+///   _nativeLogger.w("<log message>");
+/// 
+///   try {
+///     ... 
+///   } catch (ex, stack) {
+///     _nativeLogger.e(ex, stack: stack);
+///   }
+/// ```
+/// 
+/// Following table is list of logging methods and it's corresponding platform methods.
+///  
+/// | methods | android | iOS/macos | 
+/// -|-|-
+/// | [SimpleNativeLogger.v] | Log.v | Logger.debug |
+/// | [SimpleNativeLogger.d] | Log.d | Logger.debug |
+/// | [SimpleNativeLogger.i] | Log.i | Logger.info |
+/// | [SimpleNativeLogger.w] | Log.w | Logger.notice |
+/// | [SimpleNativeLogger.e] | Log.e | Logger.error |
+/// | [SimpleNativeLogger.f] | Log.wtf | Logger.fault |
+/// 
 class SimpleNativeLogger { 
-  // static initialize method.
-  // This method must be called once before using NativeLogger class
+  /// static initialize method.
+  /// 
+  /// This method must be called once before using this class.
   static void init() {
     if (!_isInitialized) {
       _listenerLoop();
     }
   }
 
-  // constructor
   SimpleNativeLogger({
     this.tag = 'flutter',
     this.logLevel = LogLevel.verbose,
@@ -35,56 +73,61 @@ class SimpleNativeLogger {
     this.addLineNumber = true
   });
 
-  // categorize log message.
-  // for android, mapped to tag parameter
-  // for iOS/macos, mapped to category parameter
+  /// Used to categorize log message.
+  /// 
+  /// for android, mapped to tag parameter
+  /// for iOS/macos, mapped to category parameter
   String tag;
 
-  // determin which log level to output.
-  // .verbose : every log to output
-  // .silent : every log to suppress
-  // If .error is set for example,
-  // .error and .fatal to output and other to suppress.
+  /// Determine which log level to output.
+  /// 
+  /// .verbose : every log to output  
+  /// .silent : every log to suppress  
+  /// If .error is set for example,
+  /// error and fatal log to output and other to suppress.
   LogLevel logLevel;
 
-  // number of stack trace to be logged.
-  // set -1 to full stack 
+  /// Depth of stack trace to be logged.
+  /// 
+  /// This property is used if optional stack trace parameter is
+  /// passed to logging methods.  
+  /// Set minus value to log full stack .
   int stackCount;
 
-  // set true when add source filename and line number to log message
+  /// Whether add source filename and line number to log message
   bool addLineNumber;
 
-  // log verbose message
+  /// Log verbose message
   void v(Object message, {StackTrace? stack}) {
     log(LogLevel.verbose, message, stack);
   }
 
-  // log debug message
+  /// Log debug message
   void d(Object message, {StackTrace? stack}) {
     log(LogLevel.debug, message, stack);
   }
 
-  // log info message
+  /// Log info message
   void i(Object message, {StackTrace? stack}) {
     log(LogLevel.info, message, stack);
   }
 
-  // log warning message
+  /// Log warning message
   void w(Object message, {StackTrace? stack}) {
     log(LogLevel.warning, message, stack);
   }
 
-  // log error message
+  /// Log error message
   void e(Object message, {StackTrace? stack}) {
     log(LogLevel.error, message, stack);
   }
 
-  // log fatal message
+  /// Log fatal message
   void f(Object message, {StackTrace? stack}) {
     log(LogLevel.fatal, message, stack);
   }
 
-  // low level log method
+  /// Low level log method.
   void log(LogLevel level, Object message, StackTrace? stack) {
     if (level == LogLevel.silent) {
       return;
@@ -142,7 +185,9 @@ class SimpleNativeLogger {
     }
   }
 
-  // internal method to determine whether echo back needed
+  /// Internal method used to determine whether echo back needed.
+  /// 
+  /// If you want change echo function, override this method.
   bool isEchoNeeded(LogLevel logLevel) {
     if (kReleaseMode) {
       return false;
@@ -153,6 +198,9 @@ class SimpleNativeLogger {
     return true;
   }
 
+  /// Internal method used to echo back to console.
+  /// 
+  /// If you want change echo function, override this method.
   void echo(LogInfo info) {
     var kind = "";
 
@@ -194,6 +242,7 @@ class SimpleNativeLogger {
   }
 }
 
+/// This structure is internally used by [SimpleNativeLogger]
 class LogInfo {
   LogInfo(this.level, this.tag, this.message);
 

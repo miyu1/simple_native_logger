@@ -4,6 +4,7 @@ Android has logcat system for application logging,
 and macOS/iOS also has similar logging system.
 
 Native logger is flutter plugin to put logs to these platform native logging system.
+It also shows log to flutter console. 
 
 | |Android|macOS|iOS|
 -|-|-|-
@@ -23,7 +24,7 @@ $ adb shell 'logcat -v time --pid=$(pidof -s io.github.miyu1.simple_native_logge
 ```
 
 On macOS/iOS, you can see the logs using macOS Console app,
-![Console App](doc/images/console_app.png "Console App")  
+![Console App](https://github.com/miyu1/simple_native_logger/raw/main/doc/images/console_app.png "Console App")  
 
 or by log command.
 (For iOS simulator, run 'xcrun simctl spawn booted log' command with same parameter.)
@@ -61,49 +62,37 @@ void main() {
   }
 ```
 
-To use native_logger, you have to call SimpleNativeLogger.init() once, may be in main.  
-Then anywhere in code, you can use SimpleNativeLogger class for logging.  
+To use simple_native_logger, you have to call
+[SimpleNativeLogger](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger-class.html).init() once,
+may be in main.  
+Then anywhere in code, you can use
+[SimpleNativeLogger](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger-class.html)
+class for logging.  
 You can also pass optional stack trace parameter.
 
 Following table lists SimpleNativeLogger methods and corresponding method on each platform. 
 
 | simple_native_logger | android | iOS/macos | 
 -|-|-
-| SimpleNativeLogger.v | Log.v | Logger.debug |
-| SimpleNativeLogger.d | Log.d | Logger.debug |
-| SimpleNativeLogger.i | Log.i | Logger.info |
-| SimpleNativeLogger.w | Log.w | Logger.notice |
-| SimpleNativeLogger.e | Log.e | Logger.error |
-| SimpleNativeLogger.f | Log.wtf | Logger.fault |
+| [SimpleNativeLogger.v](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger/v.html) | Log.v | Logger.debug |
+| [SimpleNativeLogger.d](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger/d.html) | Log.d | Logger.debug |
+| [SimpleNativeLogger.i](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger/i.html) | Log.i | Logger.info |
+| [SimpleNativeLogger.w](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger/w.html) | Log.w | Logger.notice |
+| [SimpleNativeLogger.e](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger/e.html) | Log.e | Logger.error |
+| [SimpleNativeLogger.f](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger/f.html) | Log.wtf | Logger.fault |
 
 On Android, android.util.Log class is used to implement.  
-'tag' parameter of SimpleNativeLogger is used as tag parameter of the Log class.  
+Tag property of SimpleNativeLogger is used as tag parameter of the Log class.  
 Log.isLoggable is also called before log.
 
 On macOS/iOS, os.Logger class is used to implement.  
-'tag' parameter of SimpleNativeLogger is used as
+Tag property of SimpleNativeLogger is used as
 category parameter of the Logger class.  
-subsystem parameter is fixed to bundle ID.
-
-Other constructor parameters are following:
-
-**logLevel** is to suppress lower level logs.  
-For example, if LogLevel.error is set, error and fatal logs are outputted,
-but verbose, debug, info and warning logs are not.  
-Default value is LogLevel.verbose that all logs are outputted.
-
-**stackCount** is used when optional stack trace parameter is
-passed to loggging methods.  
-Stack trace depth in log message is limited to stackCount value.  
-If stackCount is munis value, full stack is logged.
-
-If **addLineNumber** is set to true,
-source filename and line number is appended to log.  
-If stack trace parameter is passed to loggging methods, this parameter is ignored.
+Subsystem parameter of os.Logger is fixed to bundle ID.
 
 ## Notice for Android
 
-By default, verbose and debug log is not shown.  
+By default, verbose and debug log is not logged.  
 Use adb command to change behavior.  
 Currently android log is also shown to flutter console,
 and the adb settings also affects to it.
@@ -123,7 +112,7 @@ E/MyApp   ( 4150): error log (package:simple_native_logger_example/main.dart:111
 E/MyApp   ( 4150): fatal log (package:simple_native_logger_example/main.dart:117:33)
 ```
 
-MyApp is a tag parameter I used in exmaple app.
+MyApp is a tag I used in exmaple app.
 Change it to your own.  
 
 To reset,
@@ -137,13 +126,16 @@ emu64xa:/ $ exit
 By default, verbose, debug and info log is not shown by console app or log command.  
 To change this behavior on console app, use Action menu of it.
 
-![Console App Menu](doc/images/console_app_menu.png "Console App Menu") 
+![Console App Menu](https://github.com/miyu1/simple_native_logger/raw/main/doc/images/console_app_menu.png "Console App Menu") 
 
 For log command, and '--level debug' option.
 
 Currently, macOS/iOS logs are not shown in flutter console.  
 So I added code to show logs to flutter console.
-isEchoNeeded and echo method of NativeLogger do the job. 
+[isEchoNeeded](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger/isEchoNeeded.html)
+and
+[echo](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger/echo.html)
+method of SimpleNativeLogger do the job. 
 
 ```
 $ flutter run

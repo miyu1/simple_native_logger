@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'simple_native_logger_platform_interface.dart';
 
-/// An implementation of [NativeLoggerPlatform] that uses method channels.
+/// An implementation of [SimpleNativeLoggerPlatform] that uses method channels.
 class MethodChannelSimpleNativeLogger extends SimpleNativeLoggerPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
