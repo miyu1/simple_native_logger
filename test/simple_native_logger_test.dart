@@ -8,22 +8,26 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockSimpleNativeLoggerPlatform
     with MockPlatformInterfaceMixin
-    implements SimpleNativeLoggerPlatform {
+    implements SimpleNativeLoggerPlatform 
+{
   int level = 0;
   String tag = "";
   String message = "";
+  bool useIsLoggable = false;
 
   @override
-  Future<void> log(int level, String tag, String message) async {
+  Future<void> log(int level, String tag, String message, bool useIsLoggable) async {
     this.level = level;
     this.tag = tag;
     this.message = message;
+    this.useIsLoggable = useIsLoggable;
   }
 
   void clear() {
     level = 0;
     tag = "";
     message = "";
+    useIsLoggable = false;
   }
 }
 
@@ -64,15 +68,6 @@ void main() {
     expect(initialPlatform, isInstanceOf<MethodChannelSimpleNativeLogger>());
   });
 
-  /*
-  test('getPlatformVersion', () async {
-    NativeLogger nativeLoggerPlugin = NativeLogger();
-    MockNativeLoggerPlatform fakePlatform = MockNativeLoggerPlatform();
-    NativeLoggerPlatform.instance = fakePlatform;
-
-    expect(await nativeLoggerPlugin.getPlatformVersion(), '42');
-  });
-  */
   test('log basic test', () async {
     const tag = "TAG";
     const message = "LogMessage";
@@ -224,4 +219,46 @@ void main() {
       expect(messageList[1], "stack trace:");
     }
   });
+
+  test('useIsLoggable test', () async {
+    const tag = "TAG";
+    const message = "LogMessage";
+
+    var nativeLoggerPlugin =
+        SimpleNativeLogger(tag: tag, useIsLoggable: false);
+    MockSimpleNativeLoggerPlatform fakePlatform =
+        MockSimpleNativeLoggerPlatform();
+    SimpleNativeLoggerPlatform.instance = fakePlatform;
+
+    for (final level in LogLevel.values) {
+      if (level == LogLevel.silent) {
+        continue;
+      }
+      debugPrint("testing for level: $level");
+      fakePlatform.clear();
+      testUtilLogByLevel(nativeLoggerPlugin, level, message);
+      await Future.delayed(const Duration(seconds: 1));
+      expect(fakePlatform.level, level.index);
+      expect(fakePlatform.tag, tag);
+      expect(fakePlatform.message, contains(message));
+      expect(fakePlatform.useIsLoggable, false);
+    }
+
+    nativeLoggerPlugin =
+        SimpleNativeLogger(tag: tag, useIsLoggable: true);
+    for (final level in LogLevel.values) {
+      if (level == LogLevel.silent) {
+        continue;
+      }
+      debugPrint("testing for level: $level");
+      fakePlatform.clear();
+      testUtilLogByLevel(nativeLoggerPlugin, level, message);
+      await Future.delayed(const Duration(seconds: 1));
+      expect(fakePlatform.level, level.index);
+      expect(fakePlatform.tag, tag);
+      expect(fakePlatform.message, contains(message));
+      expect(fakePlatform.useIsLoggable, true);
+    }
+
+  });  
 }

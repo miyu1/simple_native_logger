@@ -31,7 +31,7 @@ void main() {
   test('log', () async {
     try {
       // success if no error thrown
-      await platform.log(1, "tagA", "message");
+      await platform.log(1, "tagA", "message", false);
     } catch (ex) {
       fail(ex.toString());
     }

@@ -71,11 +71,13 @@ class SimpleNativeLogger {
     }
   }
 
-  SimpleNativeLogger(
-      {this.tag = 'flutter',
-      this.logLevel = LogLevel.verbose,
-      this.stackCount = 3,
-      this.addLineNumber = true});
+  SimpleNativeLogger({
+    this.tag = 'flutter',
+    this.logLevel = LogLevel.verbose,
+    this.stackCount = 3,
+    this.addLineNumber = true,
+    this.useIsLoggable = false
+  });
 
   /// Used to categorize log message.
   ///
@@ -100,6 +102,16 @@ class SimpleNativeLogger {
 
   /// Whether add source filename and line number to log message
   bool addLineNumber;
+
+  /// Whether use isLoggable method in Android.
+  /// 
+  /// This property is not used in macOS/iOS platform.  
+  /// 
+  /// When set true, It is able to suppress lower level log
+  /// using adb command, without changing application code.
+  /// But debug and verbose log is suppresed by default,
+  /// so you have to change settings if you want to see these logs.
+  bool useIsLoggable;
 
   /// Log verbose message
   void v(Object message, {StackTrace? stack}) {
@@ -179,7 +191,7 @@ class SimpleNativeLogger {
       str1 += " ${traces[index].substring(index2)}";
     }
 
-    final logInfo = LogInfo(level, tag, str1);
+    final logInfo = LogInfo(level, tag, str1, useIsLoggable);
     _streamController.add(logInfo);
 
     //final tt = isEchoNeeded(logInfo.level);
@@ -241,17 +253,19 @@ class SimpleNativeLogger {
     _isInitialized = true;
     final stream = _streamController.stream;
     await for (final value in stream) {
-      await SimpleNativeLoggerPlatform.instance
-          .log(value.level.index, value.tag, value.message);
+      await SimpleNativeLoggerPlatform.instance.log(
+        value.level.index, value.tag, value.message, value.useIsLoggable
+      );
     }
   }
 }
 
 /// This structure is internally used by [SimpleNativeLogger]
 class LogInfo {
-  LogInfo(this.level, this.tag, this.message);
+  LogInfo(this.level, this.tag, this.message, this.useIsLoggable);
 
   final LogLevel level;
   final String tag;
   final String message;
+  final bool useIsLoggable;
 }

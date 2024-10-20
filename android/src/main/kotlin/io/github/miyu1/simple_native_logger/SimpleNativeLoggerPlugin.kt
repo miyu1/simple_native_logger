@@ -27,36 +27,37 @@ class SimpleNativeLoggerPlugin: FlutterPlugin, MethodCallHandler {
       val level = call.argument<Int>("level")
       val tag = call.argument<String>("tag")
       val message = call.argument<String>("message")
+      val useIsLoggable = call.argument<Boolean>("useIsLoggable")
       if (level != null && level >= 0 && level < 6 &&
           tag != null && message != null) {
         when(level) {
           1 -> {
-            if (Log.isLoggable(tag, Log.DEBUG)) {
+            if (isLoggable(tag, Log.DEBUG, useIsLoggable)) {
               Log.d(tag, message)
             }
           }
           2 -> {
-            if (Log.isLoggable(tag, Log.INFO)) {
+            if (isLoggable(tag, Log.INFO, useIsLoggable)) {
               Log.i(tag, message)
             }
           }
           3 -> {
-            if (Log.isLoggable(tag, Log.WARN)) {
+            if (isLoggable(tag, Log.WARN, useIsLoggable)) {
               Log.w(tag, message)
             }
           }
           4 -> {
-            if (Log.isLoggable(tag, Log.ERROR)) {
+            if (isLoggable(tag, Log.ERROR, useIsLoggable)) {
               Log.e(tag, message)
             }
           }
           5 -> {
-            if (Log.isLoggable(tag, Log.ASSERT)) {
+            if (isLoggable(tag, Log.ASSERT, useIsLoggable)) {
               Log.wtf(tag, message)
             }
           }
           else -> {
-            if (Log.isLoggable(tag, Log.VERBOSE)) {
+            if (isLoggable(tag, Log.VERBOSE, useIsLoggable)) {
               Log.v(tag, message)
             }
           }
@@ -77,5 +78,12 @@ class SimpleNativeLoggerPlugin: FlutterPlugin, MethodCallHandler {
 
   override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
     channel.setMethodCallHandler(null)
+  }
+
+  fun isLoggable(tag: String, level: Int, useIsLoggable: Boolean?) : Boolean {
+    if (useIsLoggable != null && useIsLoggable) {
+      return Log.isLoggable(tag, level)
+    }
+    return true
   }
 }

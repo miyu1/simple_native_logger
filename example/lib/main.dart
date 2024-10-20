@@ -57,6 +57,20 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               //Text('Running on: $_platformVersion\n'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('use isLoggable'),
+                  Checkbox(
+                    value: _nativeLogger.useIsLoggable,
+                    onChanged: (value) {
+                      setState(() {
+                        _nativeLogger.useIsLoggable = value!;
+                      },);
+                    }
+                  )
+                ],
+              ),
               ElevatedButton(
                   onPressed: () {
                     _nativeLogger.v("verbose log");

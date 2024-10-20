@@ -25,7 +25,7 @@ abstract class SimpleNativeLoggerPlatform extends PlatformInterface {
   }
 
   /// Invoke logging function using method channel
-  Future<void> log(int level, String tag, String message) {
+  Future<void> log(int level, String tag, String message, bool useIsLoggable) {
     throw UnimplementedError('log() has not been implemented.');
   }
 }
