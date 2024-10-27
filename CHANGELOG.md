@@ -1,8 +1,12 @@
-# 0.1.4 (2024 Oct. 19)
+# 0.2.0 (Oct. 2024)
+
+* add useIsLoggable propery to SimpleNativeLogger class.
+
+# 0.1.4 (Oct. 2024)
 
 * documentation typo
 
-# 0.1.2 (2024 Oct. 19)
+# 0.1.2 (Oct. 2024)
 
 * update documentation
 * format code

@@ -1,6 +1,6 @@
 PODS:
   - FlutterMacOS (1.0.0)
-  - simple_native_logger (0.1.0):
+  - simple_native_logger (0.2.0):
     - Flutter
     - FlutterMacOS
 
@@ -16,7 +16,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  simple_native_logger: e324adda860c1cf16b7c9048d2f0feb68bfbc9e7
+  simple_native_logger: c91108b657f1594f0be113f59bd57a393e674448
 
 PODFILE CHECKSUM: c2e95c8c0fe03c5c57e438583cae4cc732296009
 

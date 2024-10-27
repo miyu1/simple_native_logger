@@ -32,6 +32,10 @@ void main() async {
         break;
       }
       switch (value) {
+        case "useIsLoggable" :
+          nativeLogger.useIsLoggable = true;
+          socket.add("ok");
+          break;
         case "verbose":
           nativeLogger.v("verbose");
           await Future.delayed(const Duration(seconds: 1));

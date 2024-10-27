@@ -81,36 +81,32 @@ class SimpleNativeLogger {
 
   /// Used to categorize log message.
   ///
-  /// for android, mapped to tag parameter
-  /// for iOS/macos, mapped to category parameter
+  /// For android, mapped to tag parameter.  
+  /// For iOS/macos, mapped to category parameter.  
   String tag;
 
   /// Determine which log level to output.
   ///
-  /// .verbose : every log to output
-  /// .silent : every log to suppress
-  /// If .error is set for example,
+  /// [LogLevel.verbose] : every log to output.  
+  /// [LogLevel.silent] : every log to suppress.  
+  /// If [LogLevel.error] is set for example,
   /// error and fatal log to output and other to suppress.
   LogLevel logLevel;
 
   /// Depth of stack trace to be logged.
   ///
   /// This property is used if optional stack trace parameter is
-  /// passed to logging methods.
-  /// Set minus value to log full stack .
+  /// passed to logging methods.  
+  /// Set minus value to log full stack.
   int stackCount;
 
   /// Whether add source filename and line number to log message
   bool addLineNumber;
 
-  /// Whether use isLoggable method in Android.
+  /// Whether call Log.isLoggable method before logging in Android.
   /// 
-  /// This property is not used in macOS/iOS platform.  
-  /// 
-  /// When set true, It is able to suppress lower level log
-  /// using adb command, without changing application code.
-  /// But debug and verbose log is suppresed by default,
-  /// so you have to change settings if you want to see these logs.
+  /// This property is not used in macOS/iOS.  
+  /// When true, debug and verbose log is suppresed by default, on Android.
   bool useIsLoggable;
 
   /// Log verbose message

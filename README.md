@@ -83,7 +83,8 @@ Following table lists SimpleNativeLogger methods and corresponding method on eac
 
 On Android, android.util.Log class is used to implement.  
 Tag property of SimpleNativeLogger is used as tag parameter of the Log class.  
-Log.isLoggable is also called before log.
+When [useIsLoggable](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger/useIsLoggable.html)
+property is set to true, Log.isLoggable is also called before log.
 
 On macOS/iOS, os.Logger class is used to implement.  
 Tag property of SimpleNativeLogger is used as
@@ -92,9 +93,10 @@ Subsystem parameter of os.Logger is fixed to bundle ID.
 
 ## Notice for Android
 
-By default, verbose and debug log is not logged.  
+When [useIsLoggable](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger/useIsLoggable.html)
+property is set to true, verbose and debug log is not logged, by default.  
 Use adb command to change behavior.  
-Currently android log is also shown to flutter console,
+Currently android log is also shown to console,
 and the adb settings also affects to it.
 
 ```
@@ -114,6 +116,7 @@ E/MyApp   ( 4150): fatal log (package:simple_native_logger_example/main.dart:117
 
 MyApp is a tag I used in exmaple app.
 Change it to your own.  
+Setprop value V is for verbose level, so all log will be logged.
 
 To reset,
 ```
@@ -121,6 +124,9 @@ $ adb shell
 emu64xa:/ $ setprop log.tag.MyApp ""
 emu64xa:/ $ exit
 ```
+
+On emulator test(Android 14), even if [useIsLoggable](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger/useIsLoggable.html)
+is false, it is able to limit lower level log by adb setprop.
 
 ## Notice for macOS/iOS
 By default, verbose, debug and info log is not shown by console app or log command.  
