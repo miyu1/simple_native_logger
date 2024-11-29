@@ -1,4 +1,3 @@
-# Native Logger
 
 Android has logcat system for application logging,
 and macOS/iOS also has similar logging system.
