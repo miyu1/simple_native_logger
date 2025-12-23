@@ -25,6 +25,9 @@ void main() async {
 
   final nativeLogger = SimpleNativeLogger(tag: "Stub");
 
+  await Future.delayed(const Duration(seconds: 1));
+  debugPrint('stub process start listening');
+
   try {
     await for (final value in timeoutSocket) {
       debugPrint("command: $value");
