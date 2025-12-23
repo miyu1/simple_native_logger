@@ -33,8 +33,9 @@ class MockSimpleNativeLoggerPlatform
 
 // utility fuction to log by each level
 void testUtilLogByLevel(
-    SimpleNativeLogger logger, LogLevel level, Object message,
-    {StackTrace? stack}) {
+  SimpleNativeLogger logger, LogLevel level, Object message,
+  {StackTrace? stack}
+) {
   switch (level) {
     case LogLevel.verbose:
       logger.v(message, stack: stack);
@@ -61,7 +62,7 @@ void testUtilLogByLevel(
 
 void main() {
   final SimpleNativeLoggerPlatform initialPlatform =
-      SimpleNativeLoggerPlatform.instance;
+    SimpleNativeLoggerPlatform.instance;
   SimpleNativeLogger.init();
 
   test('MethodChannelNativeLogger is the default instance', () {
@@ -89,6 +90,14 @@ void main() {
       expect(fakePlatform.level, level.index);
       expect(fakePlatform.tag, tag);
       expect(fakePlatform.message, message);
+
+      expect(SimpleNativeLogger.cachedLogList.length, 1);
+      final logInfo = SimpleNativeLogger.cachedLogList[0];
+      expect(logInfo.level, level);
+      expect(logInfo.tag, tag);
+      expect(logInfo.message, message); 
+
+      SimpleNativeLogger.cachedLogList.clear();
     }
   });
 
@@ -260,5 +269,35 @@ void main() {
       expect(fakePlatform.useIsLoggable, true);
     }
 
-  });  
+  });
+
+  test('cached log list is limited by count', () async {
+    const tag = "TAG";
+
+    SimpleNativeLogger nativeLoggerPlugin =
+        SimpleNativeLogger(tag: tag, addLineNumber: false);
+    MockSimpleNativeLoggerPlatform fakePlatform =
+        MockSimpleNativeLoggerPlatform();
+    SimpleNativeLoggerPlatform.instance = fakePlatform;
+
+    for(int i = 0; i < 150; i++) {
+      nativeLoggerPlugin.i("log message $i");
+    }
+    await Future.delayed(const Duration(seconds: 1));
+    expect(SimpleNativeLogger.cachedLogList.length,
+        SimpleNativeLogger.maxLogCount);
+    expect(SimpleNativeLogger.cachedLogList[0].message, "log message 50");
+    expect(SimpleNativeLogger.cachedLogList[99].message, "log message 149");
+
+    // change max log count
+    SimpleNativeLogger.maxLogCount = 5;
+    for(int i = 0; i < 3; i++) {
+      nativeLoggerPlugin.i("additional log message $i");
+    }
+    await Future.delayed(const Duration(seconds: 1)); 
+    expect(SimpleNativeLogger.cachedLogList.length,
+        SimpleNativeLogger.maxLogCount);
+    expect(SimpleNativeLogger.cachedLogList[0].message, 'log message 148');
+    expect(SimpleNativeLogger.cachedLogList[4].message, 'additional log message 2');
+  });    
 }
