@@ -241,6 +241,14 @@ class SimpleNativeLogger {
     debugPrint("[${info.tag}:$kind] ${info.message}");
   }
 
+  /// Stores the most recent log entries.
+  /// Can be used for displaying logs in the app UI.
+  static List<LogInfo> cachedLogList = [];
+
+  /// Maximum number of log entries to keep in [cachedLogList].
+  static int maxLogCount = 100;
+
+  // Internal static properties and methods
   static final _streamController = StreamController<LogInfo>();
   static var _isInitialized = false;
 
@@ -249,6 +257,13 @@ class SimpleNativeLogger {
     _isInitialized = true;
     final stream = _streamController.stream;
     await for (final value in stream) {
+      // store to cached log list
+      cachedLogList.add(value);
+      if (cachedLogList.length > maxLogCount) {
+        int removeCount = cachedLogList.length - maxLogCount;
+        cachedLogList.removeRange(0, removeCount);
+      }
+      // send to platform interface
       await SimpleNativeLoggerPlatform.instance.log(
         value.level.index, value.tag, value.message, value.useIsLoggable
       );
@@ -264,4 +279,5 @@ class LogInfo {
   final String tag;
   final String message;
   final bool useIsLoggable;
+  final DateTime timestamp = DateTime.now();
 }

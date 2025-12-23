@@ -714,17 +714,43 @@ test("test limit log by setprop", () async {
 
 
 Future<String> findAndroidDevice() async {
-  final runner = await ProcessRunner.start(
+  var runner = await ProcessRunner.start(
     "flutter",
     ["devices"],
   );
   await runner.process.exitCode;
 
-  final devices = runner.stdout
+  var devices = runner.stdout
       .where((line) => line.contains(" • ") && line.contains("android"));
+
   if (devices.isEmpty) {
-    return "";
+    // try to start emulator
+    final emu1 = await ProcessRunner.start(
+        "flutter",
+        ["emulators"],
+    );
+    await emu1.process.exitCode;
+
+    final emulators = emu1.stdout
+        .where((line) => line.contains("android") && line.contains("Google"));
+    expect(emulators, isNotEmpty);
+    final emulator = emulators.first;
+    final elems1 = emulator.split(" • ");
+    final id = elems1[0].trim();
+    //print("emulator: $id");
+    Process.runSync("flutter", ["emulators", "--launch", id]);
+
+    // retry to find device
+    runner = await ProcessRunner.start(
+      "flutter",
+      ["devices"],
+    );
+    await runner.process.exitCode;
+
+    devices = runner.stdout
+        .where((line) => line.contains(" • ") && line.contains("android"));
   }
+  
   final device = devices.first;
   final elems = device.split(" • ");
   //print("elements: $elems");
