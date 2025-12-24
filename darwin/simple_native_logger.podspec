@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'simple_native_logger'
-  s.version          = '0.2.0'
+  s.version          = '1.0.0'
   s.summary          = 'Flutter plugin to use os.Logger from dart.'
   s.description      = <<-DESC
 Flutter plugin to use os.Logger from dart.

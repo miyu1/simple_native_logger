@@ -69,6 +69,9 @@ Then anywhere in code, you can use
 class for logging.  
 You can also pass optional stack trace parameter.
 
+Static field [cachedLogList](https://pub.dev/documentation/simple_native_logger/latest/simple_native_logger/SimpleNativeLogger/cachedLogList.html) holds recent logs you put.
+It is able to show logs on your UI.
+
 Following table lists SimpleNativeLogger methods and corresponding method on each platform. 
 
 | simple_native_logger | android | iOS/macos | 
