@@ -85,10 +85,9 @@ void main() {
         // now got response from stub
 
         //print("response: $response");
-        final(code, length, message) = analyzeResponse(response);
+        final (code, length, message) = analyzeResponse(response);
         expect(code, "ok");
         // debugPrint('length: $length, message: <<$message>>');
-
 
         // print("state: $state");
         Iterable<String> stublogs = [];
@@ -170,7 +169,7 @@ void main() {
             break;
           case 8: // clear
             expect(length, 0);
-            break; 
+            break;
         }
         if (state >= 1 && state <= 7) {
           /*
@@ -331,8 +330,7 @@ void main() {
       //["-d", "macos", "run", "-t", "integration_test/test_stub.dart"],
     );
 
-    var socket = await connect(
-        "ws://$ipaddress:4040/ws");
+    var socket = await connect("ws://$ipaddress:4040/ws");
 
     // have to wait flutter to build and run test_stub
     var timeoutSocket = socket.timeout(const Duration(seconds: 60));
@@ -346,7 +344,7 @@ void main() {
         // now got response from stub
 
         //print("response: $response");
-        final(code, length, message) = analyzeResponse(response);
+        final (code, length, message) = analyzeResponse(response);
         expect(code, "ok");
         // debugPrint('length: $length, message: <<$message>>');
 

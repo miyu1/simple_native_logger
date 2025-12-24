@@ -71,24 +71,23 @@ class SimpleNativeLogger {
     }
   }
 
-  SimpleNativeLogger({
-    this.tag = 'flutter',
-    this.logLevel = LogLevel.verbose,
-    this.stackCount = 3,
-    this.addLineNumber = true,
-    this.useIsLoggable = false
-  });
+  SimpleNativeLogger(
+      {this.tag = 'flutter',
+      this.logLevel = LogLevel.verbose,
+      this.stackCount = 3,
+      this.addLineNumber = true,
+      this.useIsLoggable = false});
 
   /// Used to categorize log message.
   ///
-  /// For android, mapped to tag parameter.  
-  /// For iOS/macos, mapped to category parameter.  
+  /// For android, mapped to tag parameter.
+  /// For iOS/macos, mapped to category parameter.
   String tag;
 
   /// Determine which log level to output.
   ///
-  /// [LogLevel.verbose] : every log to output.  
-  /// [LogLevel.silent] : every log to suppress.  
+  /// [LogLevel.verbose] : every log to output.
+  /// [LogLevel.silent] : every log to suppress.
   /// If [LogLevel.error] is set for example,
   /// error and fatal log to output and other to suppress.
   LogLevel logLevel;
@@ -96,7 +95,7 @@ class SimpleNativeLogger {
   /// Depth of stack trace to be logged.
   ///
   /// This property is used if optional stack trace parameter is
-  /// passed to logging methods.  
+  /// passed to logging methods.
   /// Set minus value to log full stack.
   int stackCount;
 
@@ -104,8 +103,8 @@ class SimpleNativeLogger {
   bool addLineNumber;
 
   /// Whether call Log.isLoggable method before logging in Android.
-  /// 
-  /// This property is not used in macOS/iOS.  
+  ///
+  /// This property is not used in macOS/iOS.
   /// When true, debug and verbose log is suppresed by default, on Android.
   bool useIsLoggable;
 
@@ -265,13 +264,12 @@ class SimpleNativeLogger {
       }
       // send to platform interface
       await SimpleNativeLoggerPlatform.instance.log(
-        value.level.index, value.tag, value.message, value.useIsLoggable
-      );
+          value.level.index, value.tag, value.message, value.useIsLoggable);
     }
   }
 }
 
-/// This structure is internally used by [SimpleNativeLogger]
+/// Log information of each log entry.
 class LogInfo {
   LogInfo(this.level, this.tag, this.message, this.useIsLoggable);
 
@@ -279,5 +277,8 @@ class LogInfo {
   final String tag;
   final String message;
   final bool useIsLoggable;
+
+  /// Timestamp when this log entry is created.
+  /// Note that this value is not as same as timestamp in platform logging system.
   final DateTime timestamp = DateTime.now();
 }

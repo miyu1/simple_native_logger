@@ -89,7 +89,7 @@ void main() {
       var state = 0;
       await for (final response in timeoutSocket) {
         //print("response: $response");
-        final(code, length, message) = analyzeResponse(response);
+        final (code, length, message) = analyzeResponse(response);
         expect(code, "ok");
         // debugPrint('length: $length, message: <<$message>>');
 
@@ -121,7 +121,7 @@ void main() {
                 (line) => line.contains("I/$tag") && line.contains(command));
             break;
           case 4: // warning
-            expect(message.contains('warning'), isTrue);  
+            expect(message.contains('warning'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("W/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
@@ -168,7 +168,7 @@ void main() {
           for (final line in adb.stdout) {
             print("adb: $line");
           }
-          */  
+          */
           expect(length, state);
         }
         if (state == 7) {
@@ -332,7 +332,7 @@ void main() {
       var state = 0;
       await for (final response in timeoutSocket) {
         //print("response: $response");
-        final(code, length, message) = analyzeResponse(response);
+        final (code, length, message) = analyzeResponse(response);
         expect(code, "ok");
         // debugPrint('length: $length, message: <<$message>>');
 
@@ -506,9 +506,9 @@ void main() {
       // need retry because in some cases stub fails to start
       // when it takes long time to build and start stub and timeout exception occurs
       timeout: const Timeout.factor(3),
-      retry: 3);      
+      retry: 3);
 
-test("test limit log by setprop", () async {
+  test("test limit log by setprop", () async {
     const tag = "Stub";
 
     final networks =
@@ -576,7 +576,7 @@ test("test limit log by setprop", () async {
       var state = 0;
       await for (final response in timeoutSocket) {
         //print("response: $response");
-        final(code, length, message) = analyzeResponse(response);
+        final (code, length, message) = analyzeResponse(response);
         expect(code, "ok");
         //debugPrint('length: $length, message: <<$message>>');
 
@@ -616,7 +616,7 @@ test("test limit log by setprop", () async {
             break;
           case 5: // error
             expect(message.contains('error'), isTrue);
-              stublogs = stub.stdout.where(
+            stublogs = stub.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
@@ -746,9 +746,8 @@ test("test limit log by setprop", () async {
       // need retry because in some cases stub fails to start
       // when it takes long time to build and start stub and timeout exception occurs
       timeout: const Timeout.factor(3),
-      retry: 3);      
+      retry: 3);
 }
-
 
 Future<String> findAndroidDevice() async {
   var runner = await ProcessRunner.start(
@@ -763,8 +762,8 @@ Future<String> findAndroidDevice() async {
   if (devices.isEmpty) {
     // try to start emulator
     final emu1 = await ProcessRunner.start(
-        "flutter",
-        ["emulators"],
+      "flutter",
+      ["emulators"],
     );
     await emu1.process.exitCode;
 
@@ -787,7 +786,7 @@ Future<String> findAndroidDevice() async {
     devices = runner.stdout
         .where((line) => line.contains(" • ") && line.contains("android"));
   }
-  
+
   final device = devices.first;
   final elems = device.split(" • ");
   //print("elements: $elems");

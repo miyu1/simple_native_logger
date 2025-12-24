@@ -87,7 +87,7 @@ void main() {
         // now got response from stub
 
         // print("response: $response");
-        final(code, length, message) = analyzeResponse(response);
+        final (code, length, message) = analyzeResponse(response);
         expect(code, "ok");
         // debugPrint('length: $length, message: <<$message>>');
 
@@ -164,7 +164,7 @@ void main() {
             expect(length, 0);
             break;
         }
-        if (state >= 1 && state <= 7) { 
+        if (state >= 1 && state <= 7) {
           // stublogs and logclogs except clear command
           //print("stublogs: $stublogs");
           /*
@@ -327,7 +327,7 @@ void main() {
         // now got response from stub
 
         //print("response: $response");
-        final(code, length, message) = analyzeResponse(response);
+        final (code, length, message) = analyzeResponse(response);
         expect(code, "ok");
         // debugPrint('length: $length, message: <<$message>>');
 
@@ -412,7 +412,7 @@ void main() {
 
           //print("logclogs: $logclogs");
           expect(logclogs, isNotEmpty);
-          
+
           expect(length, state - 1);
         }
         if (state == 8) {
@@ -564,7 +564,7 @@ void main() {
         // now got response from stub
 
         //print("response: $response");
-        final(code, length, message) = analyzeResponse(response);
+        final (code, length, message) = analyzeResponse(response);
         expect(code, "ok");
         // debugPrint('length: $length, message: <<$message>>');
 
@@ -749,4 +749,3 @@ Future<String> findMacDevice() async {
   //print("elements: $elems");
   return elems[1].trim();
 }
-

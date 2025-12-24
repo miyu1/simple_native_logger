@@ -8,15 +8,15 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockSimpleNativeLoggerPlatform
     with MockPlatformInterfaceMixin
-    implements SimpleNativeLoggerPlatform 
-{
+    implements SimpleNativeLoggerPlatform {
   int level = 0;
   String tag = "";
   String message = "";
   bool useIsLoggable = false;
 
   @override
-  Future<void> log(int level, String tag, String message, bool useIsLoggable) async {
+  Future<void> log(
+      int level, String tag, String message, bool useIsLoggable) async {
     this.level = level;
     this.tag = tag;
     this.message = message;
@@ -33,9 +33,8 @@ class MockSimpleNativeLoggerPlatform
 
 // utility fuction to log by each level
 void testUtilLogByLevel(
-  SimpleNativeLogger logger, LogLevel level, Object message,
-  {StackTrace? stack}
-) {
+    SimpleNativeLogger logger, LogLevel level, Object message,
+    {StackTrace? stack}) {
   switch (level) {
     case LogLevel.verbose:
       logger.v(message, stack: stack);
@@ -62,7 +61,7 @@ void testUtilLogByLevel(
 
 void main() {
   final SimpleNativeLoggerPlatform initialPlatform =
-    SimpleNativeLoggerPlatform.instance;
+      SimpleNativeLoggerPlatform.instance;
   SimpleNativeLogger.init();
 
   test('MethodChannelNativeLogger is the default instance', () {
@@ -95,7 +94,7 @@ void main() {
       final logInfo = SimpleNativeLogger.cachedLogList[0];
       expect(logInfo.level, level);
       expect(logInfo.tag, tag);
-      expect(logInfo.message, message); 
+      expect(logInfo.message, message);
 
       SimpleNativeLogger.cachedLogList.clear();
     }
@@ -233,8 +232,7 @@ void main() {
     const tag = "TAG";
     const message = "LogMessage";
 
-    var nativeLoggerPlugin =
-        SimpleNativeLogger(tag: tag, useIsLoggable: false);
+    var nativeLoggerPlugin = SimpleNativeLogger(tag: tag, useIsLoggable: false);
     MockSimpleNativeLoggerPlatform fakePlatform =
         MockSimpleNativeLoggerPlatform();
     SimpleNativeLoggerPlatform.instance = fakePlatform;
@@ -253,8 +251,7 @@ void main() {
       expect(fakePlatform.useIsLoggable, false);
     }
 
-    nativeLoggerPlugin =
-        SimpleNativeLogger(tag: tag, useIsLoggable: true);
+    nativeLoggerPlugin = SimpleNativeLogger(tag: tag, useIsLoggable: true);
     for (final level in LogLevel.values) {
       if (level == LogLevel.silent) {
         continue;
@@ -268,7 +265,6 @@ void main() {
       expect(fakePlatform.message, contains(message));
       expect(fakePlatform.useIsLoggable, true);
     }
-
   });
 
   test('cached log list is limited by count', () async {
@@ -280,7 +276,7 @@ void main() {
         MockSimpleNativeLoggerPlatform();
     SimpleNativeLoggerPlatform.instance = fakePlatform;
 
-    for(int i = 0; i < 150; i++) {
+    for (int i = 0; i < 150; i++) {
       nativeLoggerPlugin.i("log message $i");
     }
     await Future.delayed(const Duration(seconds: 1));
@@ -291,13 +287,14 @@ void main() {
 
     // change max log count
     SimpleNativeLogger.maxLogCount = 5;
-    for(int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
       nativeLoggerPlugin.i("additional log message $i");
     }
-    await Future.delayed(const Duration(seconds: 1)); 
+    await Future.delayed(const Duration(seconds: 1));
     expect(SimpleNativeLogger.cachedLogList.length,
         SimpleNativeLogger.maxLogCount);
     expect(SimpleNativeLogger.cachedLogList[0].message, 'log message 148');
-    expect(SimpleNativeLogger.cachedLogList[4].message, 'additional log message 2');
-  });    
+    expect(SimpleNativeLogger.cachedLogList[4].message,
+        'additional log message 2');
+  });
 }

@@ -70,11 +70,14 @@ class _HomeWidgetState extends State<HomeWidget> {
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: TextButton(
-              child: const Text('View Logs',),
+              child: const Text(
+                'View Logs',
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ViewLogsWidget()),
+                  MaterialPageRoute(
+                      builder: (context) => const ViewLogsWidget()),
                 );
               },
             ),
@@ -188,7 +191,7 @@ class _ViewLogsWidgetState extends State<ViewLogsWidget> {
               break;
             case LogLevel.debug:
               type = 'D';
-              break;          
+              break;
             case LogLevel.info:
               type = 'I';
               break;
@@ -219,7 +222,9 @@ class _ViewLogsWidgetState extends State<ViewLogsWidget> {
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: TextButton(
-              child: const Text('Clear',),
+              child: const Text(
+                'Clear',
+              ),
               onPressed: () {
                 setState(() {
                   SimpleNativeLogger.cachedLogList.clear();
@@ -227,7 +232,7 @@ class _ViewLogsWidgetState extends State<ViewLogsWidget> {
               },
             ),
           ),
-        ],        
+        ],
       ),
       body: body,
     );

@@ -10,12 +10,13 @@ class MethodChannelSimpleNativeLogger extends SimpleNativeLoggerPlatform {
   final methodChannel = const MethodChannel('simple_native_logger');
 
   @override
-  Future<void> log(int level, String tag, String message, bool useIsLoggable) async {
+  Future<void> log(
+      int level, String tag, String message, bool useIsLoggable) async {
     final arguments = {
       'level': level,
       'tag': tag,
       'message': message,
-      'useIsLoggable': useIsLoggable 
+      'useIsLoggable': useIsLoggable
     };
     await methodChannel.invokeMethod('log', arguments);
   }
