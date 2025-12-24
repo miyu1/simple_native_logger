@@ -1,8 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+
 import 'package:simple_native_logger/simple_native_logger.dart';
 
 void main() {
@@ -36,9 +37,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  //String _platformVersion = 'Unknown';
-  final _nativeLogger = SimpleNativeLogger(tag: "MyApp");
-
   @override
   void initState() {
     super.initState();
@@ -48,11 +46,43 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
+      home: HomeWidget(),
+    );
+  }
+}
+
+class HomeWidget extends StatefulWidget {
+  const HomeWidget({super.key});
+
+  @override
+  State<HomeWidget> createState() => _HomeWidgetState();
+}
+
+class _HomeWidgetState extends State<HomeWidget> {
+  final _nativeLogger = SimpleNativeLogger(tag: "MyApp");
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Plugin example app'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: TextButton(
+              child: const Text('View Logs',),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ViewLogsWidget()),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -62,13 +92,14 @@ class _MyAppState extends State<MyApp> {
                 children: [
                   const Text('use isLoggable'),
                   Checkbox(
-                    value: _nativeLogger.useIsLoggable,
-                    onChanged: (value) {
-                      setState(() {
-                        _nativeLogger.useIsLoggable = value!;
-                      },);
-                    }
-                  )
+                      value: _nativeLogger.useIsLoggable,
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            _nativeLogger.useIsLoggable = value!;
+                          },
+                        );
+                      })
                 ],
               ),
               ElevatedButton(
@@ -101,14 +132,6 @@ class _MyAppState extends State<MyApp> {
                     _nativeLogger.f("fatal log");
                   },
                   child: const Text('fatal log')),
-              /*
-              ElevatedButton(
-                onPressed: () {
-                  _nativeLogger.log(LogLevel.silent, "silent log", null);
-                },
-                child: const Text('silent')
-              ),
-              */
               ElevatedButton(
                   onPressed: () {
                     try {
@@ -133,6 +156,80 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ViewLogsWidget extends StatefulWidget {
+  const ViewLogsWidget({super.key});
+
+  @override
+  State<ViewLogsWidget> createState() => _ViewLogsWidgetState();
+}
+
+class _ViewLogsWidgetState extends State<ViewLogsWidget> {
+  @override
+  Widget build(BuildContext context) {
+    Widget body = const Center(
+      child: Text('No logs available.'),
+    );
+    if (SimpleNativeLogger.cachedLogList.isNotEmpty) {
+      body = ListView.builder(
+        itemCount: SimpleNativeLogger.cachedLogList.length,
+        itemBuilder: (context, index) {
+          final length = SimpleNativeLogger.cachedLogList.length;
+          final item = SimpleNativeLogger.cachedLogList[length - index - 1];
+          final formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+          final timeStr = formatter.format(item.timestamp.toLocal());
+          var type = '';
+          switch (item.level) {
+            case LogLevel.verbose:
+              type = 'V';
+              break;
+            case LogLevel.debug:
+              type = 'D';
+              break;          
+            case LogLevel.info:
+              type = 'I';
+              break;
+            case LogLevel.warning:
+              type = 'W';
+              break;
+            case LogLevel.error:
+              type = 'E';
+              break;
+            case LogLevel.fatal:
+              type = 'F';
+              break;
+            case LogLevel.silent:
+              type = 'S';
+              break;
+          }
+          return ListTile(
+            title: Text('$timeStr $type/${item.tag}'),
+            subtitle: Text(item.message),
+          );
+        },
+      );
+    }
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Cached Log List'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: TextButton(
+              child: const Text('Clear',),
+              onPressed: () {
+                setState(() {
+                  SimpleNativeLogger.cachedLogList.clear();
+                });
+              },
+            ),
+          ),
+        ],        
+      ),
+      body: body,
     );
   }
 }
