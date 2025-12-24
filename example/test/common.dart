@@ -51,3 +51,14 @@ class ProcessRunner {
     stdout = [];
   }
 }
+
+(String response, int length, String message) analyzeResponse(String response) {
+  final lines = response.split("\n");
+  final line1Parts = lines[0].split(' ');
+  var length = -1;
+  if (line1Parts.length >= 2) {
+    length = int.parse(line1Parts[1]);
+  }
+  final message = lines.sublist(1).join('\n');
+  return (line1Parts[0], length, message);
+}

@@ -86,8 +86,10 @@ void main() {
       await for (final response in timeoutSocket) {
         // now got response from stub
 
-        //print("response: $response");
-        expect(response, "ok");
+        // print("response: $response");
+        final(code, length, message) = analyzeResponse(response);
+        expect(code, "ok");
+        // debugPrint('length: $length, message: <<$message>>');
 
         // print("state: $state");
         Iterable<String> stublogs = [];
@@ -96,6 +98,7 @@ void main() {
         // check result
         switch (state) {
           case 1: // verbose
+            expect(message.contains('verbose'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:V]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -104,6 +107,7 @@ void main() {
                 line.contains(command));
             break;
           case 2: // debug
+            expect(message.contains('debug'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:D]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -112,6 +116,7 @@ void main() {
                 line.contains(command));
             break;
           case 3: // info
+            expect(message.contains('info'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:I]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -120,6 +125,7 @@ void main() {
                 line.contains(command));
             break;
           case 4: // warning
+            expect(message.contains('warning'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:W]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -128,6 +134,7 @@ void main() {
                 line.contains(command));
             break;
           case 5: // error
+            expect(message.contains('error'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:E]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -136,6 +143,7 @@ void main() {
                 line.contains(command));
             break;
           case 6: // fatal
+            expect(message.contains('fatal'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:F]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -144,6 +152,7 @@ void main() {
                 line.contains(command));
             break;
           case 7: // exception
+            expect(message.contains('error'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:E]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -151,8 +160,12 @@ void main() {
                 line.contains("Error") &&
                 line.contains(command));
             break;
+          case 8: //clear
+            expect(length, 0);
+            break;
         }
-        if (state >= 1) {
+        if (state >= 1 && state <= 7) { 
+          // stublogs and logclogs except clear command
           //print("stublogs: $stublogs");
           /*
           for(final line in stub.stdout) {
@@ -163,6 +176,8 @@ void main() {
 
           //print("logclogs: $logclogs");
           expect(logclogs, isNotEmpty);
+
+          expect(length, state);
         }
         if (state == 7) {
           stublogs = stub.stdout.where((line) => line.contains("stack trace"));
@@ -176,7 +191,7 @@ void main() {
         }
 
         state += 1;
-        if (state == 8) {
+        if (state == 9) {
           break;
         }
         stub.clearStdout();
@@ -209,6 +224,10 @@ void main() {
             break;
           case 7:
             command = "exception";
+            socket.add(command);
+            break;
+          case 8:
+            command = "clear";
             socket.add(command);
             break;
         }
@@ -308,7 +327,9 @@ void main() {
         // now got response from stub
 
         //print("response: $response");
-        expect(response, "ok");
+        final(code, length, message) = analyzeResponse(response);
+        expect(code, "ok");
+        // debugPrint('length: $length, message: <<$message>>');
 
         // print("state: $state");
         Iterable<String> stublogs = [];
@@ -317,6 +338,7 @@ void main() {
         // check result
         switch (state) {
           case 2: // verbose
+            expect(message.contains('verbose'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:V]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -325,6 +347,7 @@ void main() {
                 line.contains(command));
             break;
           case 3: // debug
+            expect(message.contains('debug'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:D]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -333,6 +356,7 @@ void main() {
                 line.contains(command));
             break;
           case 4: // info
+            expect(message.contains('info'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:I]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -341,6 +365,7 @@ void main() {
                 line.contains(command));
             break;
           case 5: // warning
+            expect(message.contains('warning'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:W]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -349,6 +374,7 @@ void main() {
                 line.contains(command));
             break;
           case 6: // error
+            expect(message.contains('error'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:E]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -357,6 +383,7 @@ void main() {
                 line.contains(command));
             break;
           case 7: // fatal
+            expect(message.contains('fatal'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:F]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -365,6 +392,7 @@ void main() {
                 line.contains(command));
             break;
           case 8: // exception
+            expect(message.contains('error'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:E]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -384,6 +412,8 @@ void main() {
 
           //print("logclogs: $logclogs");
           expect(logclogs, isNotEmpty);
+          
+          expect(length, state - 1);
         }
         if (state == 8) {
           stublogs = stub.stdout.where((line) => line.contains("stack trace"));
@@ -534,7 +564,9 @@ void main() {
         // now got response from stub
 
         //print("response: $response");
-        expect(response, "ok");
+        final(code, length, message) = analyzeResponse(response);
+        expect(code, "ok");
+        // debugPrint('length: $length, message: <<$message>>');
 
         // print("state: $state");
         Iterable<String> stublogs = [];
@@ -543,6 +575,7 @@ void main() {
         // check result
         switch (state) {
           case 1: // verbose
+            expect(message.contains('verbose'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:V]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -551,6 +584,7 @@ void main() {
                 line.contains(command));
             break;
           case 2: // debug
+            expect(message.contains('debug'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:D]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -559,6 +593,7 @@ void main() {
                 line.contains(command));
             break;
           case 3: // info
+            expect(message.contains('info'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:I]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -567,6 +602,7 @@ void main() {
                 line.contains(command));
             break;
           case 4: // warning
+            expect(message.contains('warning'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:W]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -575,6 +611,7 @@ void main() {
                 line.contains(command));
             break;
           case 5: // error
+            expect(message.contains('error'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:E]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -583,6 +620,7 @@ void main() {
                 line.contains(command));
             break;
           case 6: // fatal
+            expect(message.contains('fatal'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:F]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -591,6 +629,7 @@ void main() {
                 line.contains(command));
             break;
           case 7: // exception
+            expect(message.contains('error'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("[$tag:E]") && line.contains(command));
             logclogs = logc.stdout.where((line) =>
@@ -610,6 +649,8 @@ void main() {
 
           //print("logclogs: $logclogs");
           expect(logclogs, isNotEmpty);
+
+          expect(length, state);
         }
         if (state == 7) {
           stublogs = stub.stdout.where((line) => line.contains("stack trace"));
@@ -708,3 +749,4 @@ Future<String> findMacDevice() async {
   //print("elements: $elems");
   return elems[1].trim();
 }
+

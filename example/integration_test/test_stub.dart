@@ -35,39 +35,39 @@ void main() async {
         break;
       }
       switch (value) {
-        case "useIsLoggable" :
+        case "useIsLoggable":
           nativeLogger.useIsLoggable = true;
-          socket.add("ok");
+          socket.add(response());
           break;
         case "verbose":
           nativeLogger.v("verbose");
           await Future.delayed(const Duration(seconds: 1));
-          socket.add("ok");
+          socket.add(response());
           break;
         case "debug":
           nativeLogger.d("debug");
           await Future.delayed(const Duration(seconds: 1));
-          socket.add("ok");
+          socket.add(response());
           break;
         case "info":
           nativeLogger.i("info");
           await Future.delayed(const Duration(seconds: 1));
-          socket.add("ok");
+          socket.add(response());
           break;
         case "warning":
           nativeLogger.w("warning");
           await Future.delayed(const Duration(seconds: 1));
-          socket.add("ok");
+          socket.add(response());
           break;
         case "error":
           nativeLogger.e("error");
           await Future.delayed(const Duration(seconds: 1));
-          socket.add("ok");
+          socket.add(response());
           break;
         case "fatal":
           nativeLogger.f("fatal");
           await Future.delayed(const Duration(seconds: 1));
-          socket.add("ok");
+          socket.add(response());
           break;
         case "exception":
           try {
@@ -76,7 +76,11 @@ void main() async {
             nativeLogger.e(ex, stack: stack);
           }
           await Future.delayed(const Duration(seconds: 1));
-          socket.add("ok");
+          socket.add(response());
+          break;
+        case 'clear':
+          SimpleNativeLogger.cachedLogList.clear();
+          socket.add(response());
           break;
       }
     }
@@ -105,4 +109,15 @@ void main() async {
   exit(0);
 
   //test("this is stub", (){});
+}
+
+String response() {
+  final buffer = StringBuffer();
+  buffer.writeln('ok ${SimpleNativeLogger.cachedLogList.length}');
+  if (SimpleNativeLogger.cachedLogList.isNotEmpty) {
+    final lastLog = SimpleNativeLogger.cachedLogList.last;
+    buffer.write('${lastLog.level}/${lastLog.tag} ${lastLog.message}');
+  }
+  final ret = buffer.toString();
+  return ret;
 }

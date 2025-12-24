@@ -80,7 +80,7 @@ void main() {
     var socket = await connect("ws://$ipaddress:4040/ws");
 
     // have to wait flutter to build and run test_stub
-    var timeoutSocket = socket.timeout(const Duration(seconds: 60));
+    var timeoutSocket = socket.timeout(const Duration(seconds: 70));
 
     // handshake
     socket.add("waiting");
@@ -89,7 +89,9 @@ void main() {
       var state = 0;
       await for (final response in timeoutSocket) {
         //print("response: $response");
-        expect(response, "ok");
+        final(code, length, message) = analyzeResponse(response);
+        expect(code, "ok");
+        // debugPrint('length: $length, message: <<$message>>');
 
         // print("state: $state");
         Iterable<String> stublogs = [];
@@ -97,51 +99,61 @@ void main() {
 
         // check result
         switch (state) {
-          case 1:
+          case 1: // verbose
+            expect(message.contains('verbose'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("V/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("V/$tag") && line.contains(command));
             break;
-          case 2:
+          case 2: // debug
+            expect(message.contains('debug'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("D/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("D/$tag") && line.contains(command));
             break;
-          case 3:
+          case 3: // info
+            expect(message.contains('info'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("I/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("I/$tag") && line.contains(command));
             break;
-          case 4:
+          case 4: // warning
+            expect(message.contains('warning'), isTrue);  
             stublogs = stub.stdout.where(
                 (line) => line.contains("W/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("W/$tag") && line.contains(command));
             break;
-          case 5:
+          case 5: // error
+            expect(message.contains('error'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             break;
-          case 6:
+          case 6: // fatal
+            expect(message.contains('fatal'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             break;
-          case 7:
+          case 7: // exception
+            expect(message.contains('error'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
+            break;
+          case 8: // clear
+            expect(length, 0);
             break;
         }
 
-        if (state >= 1) {
+        if (state >= 1 && state <= 7) {
           // print("stublogs: $stublogs");
           expect(stublogs, isNotEmpty);
           /*
@@ -156,7 +168,8 @@ void main() {
           for (final line in adb.stdout) {
             print("adb: $line");
           }
-          */
+          */  
+          expect(length, state);
         }
         if (state == 7) {
           stublogs = stub.stdout.where((line) =>
@@ -168,7 +181,7 @@ void main() {
         }
 
         state += 1;
-        if (state == 8) {
+        if (state == 9) {
           break;
         }
 
@@ -202,6 +215,10 @@ void main() {
             break;
           case 7:
             command = "exception";
+            socket.add(command);
+            break;
+          case 8:
+            command = "clear";
             socket.add(command);
             break;
         }
@@ -306,7 +323,7 @@ void main() {
     var socket = await connect("ws://$ipaddress:4040/ws");
 
     // have to wait flutter to build and run test_stub
-    var timeoutSocket = socket.timeout(const Duration(seconds: 60));
+    var timeoutSocket = socket.timeout(const Duration(seconds: 70));
 
     // handshake
     socket.add("waiting");
@@ -315,7 +332,9 @@ void main() {
       var state = 0;
       await for (final response in timeoutSocket) {
         //print("response: $response");
-        expect(response, "ok");
+        final(code, length, message) = analyzeResponse(response);
+        expect(code, "ok");
+        // debugPrint('length: $length, message: <<$message>>');
 
         // print("state: $state");
         Iterable<String> stublogs = [];
@@ -323,43 +342,50 @@ void main() {
 
         // check result
         switch (state) {
-          case 2:
+          case 2: // verbose
+            expect(message.contains('verbose'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("V/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("V/$tag") && line.contains(command));
             break;
-          case 3:
+          case 3: // debug
+            expect(message.contains('debug'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("D/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("D/$tag") && line.contains(command));
             break;
-          case 4:
+          case 4: // info
+            expect(message.contains('info'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("I/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("I/$tag") && line.contains(command));
             break;
-          case 5:
+          case 5: // warning
+            expect(message.contains('warning'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("W/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("W/$tag") && line.contains(command));
             break;
-          case 6:
+          case 6: // error
+            expect(message.contains('error'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             break;
-          case 7:
+          case 7: // fatal
+            expect(message.contains('fatal'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             break;
-          case 8:
+          case 8: // exception
+            expect(message.contains('error'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
@@ -387,6 +413,7 @@ void main() {
             expect(stublogs, isEmpty);
             expect(adblogs, isEmpty);
           }
+          expect(length, state - 1);
         }
         if (state == 8) {
           stublogs = stub.stdout.where((line) =>
@@ -540,7 +567,7 @@ test("test limit log by setprop", () async {
     var socket = await connect("ws://$ipaddress:4040/ws");
 
     // have to wait flutter to build and run test_stub
-    var timeoutSocket = socket.timeout(const Duration(seconds: 60));
+    var timeoutSocket = socket.timeout(const Duration(seconds: 70));
 
     // handshake
     socket.add("waiting");
@@ -549,7 +576,9 @@ test("test limit log by setprop", () async {
       var state = 0;
       await for (final response in timeoutSocket) {
         //print("response: $response");
-        expect(response, "ok");
+        final(code, length, message) = analyzeResponse(response);
+        expect(code, "ok");
+        //debugPrint('length: $length, message: <<$message>>');
 
         // print("state: $state");
         Iterable<String> stublogs = [];
@@ -557,43 +586,50 @@ test("test limit log by setprop", () async {
 
         // check result
         switch (state) {
-          case 1:
+          case 1: // verbose
+            expect(message.contains('verbose'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("V/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("V/$tag") && line.contains(command));
             break;
-          case 2:
+          case 2: // debug
+            expect(message.contains('debug'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("D/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("D/$tag") && line.contains(command));
             break;
-          case 3:
+          case 3: // info
+            expect(message.contains('info'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("I/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("I/$tag") && line.contains(command));
             break;
-          case 4:
+          case 4: // warning
+            expect(message.contains('warning'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("W/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("W/$tag") && line.contains(command));
             break;
-          case 5:
+          case 5: // error
+            expect(message.contains('error'), isTrue);
+              stublogs = stub.stdout.where(
+                (line) => line.contains("E/$tag") && line.contains(command));
+            adblogs = adbc.stdout.where(
+                (line) => line.contains("E/$tag") && line.contains(command));
+            break;
+          case 6: // fatal
+            expect(message.contains('fatal'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             break;
-          case 6:
-            stublogs = stub.stdout.where(
-                (line) => line.contains("E/$tag") && line.contains(command));
-            adblogs = adbc.stdout.where(
-                (line) => line.contains("E/$tag") && line.contains(command));
-            break;
-          case 7:
+          case 7: // exception
+            expect(message.contains('error'), isTrue);
             stublogs = stub.stdout.where(
                 (line) => line.contains("E/$tag") && line.contains(command));
             adblogs = adbc.stdout.where(
@@ -621,6 +657,7 @@ test("test limit log by setprop", () async {
             expect(stublogs, isEmpty);
             expect(adblogs, isEmpty);
           }
+          expect(length, state);
         }
         if (state == 7) {
           stublogs = stub.stdout.where((line) =>
