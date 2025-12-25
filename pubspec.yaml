@@ -6,7 +6,7 @@ version: 1.0.0
 repository: https://github.com/miyu1/native_logger
 
 environment:
-  sdk: '>=3.5.3'
+  sdk: '>=3.5.3 <4.0.0'
   flutter: '>=3.7.0'
 
 dependencies:
