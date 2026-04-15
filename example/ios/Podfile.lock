@@ -2,7 +2,7 @@ PODS:
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - simple_native_logger (0.2.0):
+  - simple_native_logger (1.0.0):
     - Flutter
     - FlutterMacOS
 
@@ -22,7 +22,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
-  simple_native_logger: c91108b657f1594f0be113f59bd57a393e674448
+  simple_native_logger: f069a924217828a039d2b741d2bce29910e2fc99
 
 PODFILE CHECKSUM: 1959d098c91d8a792531a723c4a9d7e9f6a01e38
 
